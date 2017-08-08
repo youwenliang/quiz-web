@@ -1,2 +1,1 @@
-# quiz-web
-Quiz Web for Designers
+#This is a readme file
