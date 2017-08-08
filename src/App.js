@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import $ from 'jquery';
 import bodymovin from 'bodymovin';
+import {Helmet} from 'react-helmet';
 
 /* --- Global Variable --- */
 var results = (window.location.hash === "") ? "" : (window.location.hash).split('#')[1];
@@ -29,10 +30,18 @@ class App extends Component {
 
   render() {
     let result = null;
+    let main = null;
+    var title = results === "" ? "給設計師的專屬測驗" : "你是一個"+results;
     if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
+    if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
     return (
       <div className="App">
-        <Main stage={this.state.stage} handler={this.handler.bind(this)}/>
+        <Helmet>
+          <meta property="og:title" content={"《不只是設計師》- "+title } />
+          <meta name="description" content={results} />
+          <title>{"《不只是設計師》- "+title}</title>
+        </Helmet>
+        {main}
         <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
         {result}
       </div>
@@ -314,11 +323,6 @@ class Quiz extends Component {
 /* --- Result --- */
 class Result extends Component {
 
-  changeTags = () => {
-    $("meta[property='og\\:title']").attr("content", results);
-    $("title").html("《不只是設計師》- 你是一個"+results);
-  };
-
   componentDidMount = () => {
     console.log("mount-result");
     setTimeout(function(){
@@ -328,8 +332,6 @@ class Result extends Component {
 
   render() {
     if(this.props.stage === "result") {
-      //Change Meta Tags
-      this.changeTags();
       return (
         <div className="result" id={results}>
           <div className="result-banner">
