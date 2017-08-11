@@ -29,11 +29,13 @@ class App extends Component {
   }
 
   render() {
-    let result = null;
     let main = null;
+    let quiz = null;
+    let result = null;
     var title = results === "" ? "給設計師的專屬測驗" : "你是一個"+results;
-    if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
     if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
+    if(this.state.stage === "quiz") quiz = <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
+    if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
     return (
       <div className="App">
         <Helmet>
@@ -42,7 +44,7 @@ class App extends Component {
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
         {main}
-        <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
+        {quiz}
         {result}
       </div>
     );
@@ -77,20 +79,18 @@ class Main extends Component {
 
   render() {
     console.log(this.props.stage);
-    if(this.props.stage === "main") {
-      return (
-        <div className="main">
-          <div id="main-header">
-            <div id="main-animation"></div>
-          </div>
-          <div id="main-content">
-            <h1>給設計師的專屬測驗</h1>
-            <p>每一個設計師，包括你，都不只是設計師。<br/>簡單三分鐘，看看除了設計師之外，你的隱藏身份是什麼？</p>
-            <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗</div>
-          </div>
+    return (
+      <div className="main">
+        <div id="main-header">
+          <div id="main-animation"></div>
         </div>
-      );
-    } else return false;
+        <div id="main-content">
+          <h1>給設計師的專屬測驗</h1>
+          <p>每一個設計師，包括你，都不只是設計師。<br/>簡單三分鐘，看看除了設計師之外，你的隱藏身份是什麼？</p>
+          <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗</div>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -282,41 +282,42 @@ class Quiz extends Component {
   }
 
   render() {
-    if(this.props.stage === "quiz") {
-      if (this.state.current === "q25") {
-        return (
-          <div className="quiz">
-            <div className="progress-bar"><div id="progress-circle">0%</div></div>
-            <div id="quiz-content">
-              <div className="quiz-image"></div>
-              <h2>{quizTitle}</h2>
-              <p>{quizNum+". "+quizzes[this.state.current]}</p>
-              <div className="quiz-action three">
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
-              </div>
+    var divStyle = {
+      backgroundImage: "url(images/quiz/"+this.state.current+".png"
+    }
+    if (this.state.current === "q25") {
+      return (
+        <div className="quiz">
+          <div className="progress-bar"><div id="progress-circle">0%</div></div>
+          <div id="quiz-content">
+            <div className="quiz-image" style={divStyle}></div>
+            <h2>{quizTitle}</h2>
+            <p>{quizNum+". "+quizzes[this.state.current]}</p>
+            <div className="quiz-action three">
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
             </div>
           </div>
-        );
-      }
-      else {
-        return (
-          <div className="quiz">
-            <div className="progress-bar"><div id="progress-circle">0%</div></div>
-            <div id="quiz-content">
-              <div className="quiz-image"></div>
-              <h2>{quizTitle}</h2>
-              <p>{quizNum+". "+quizzes[this.state.current]}</p>
-              <div className="quiz-action">
-                <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>No</div>
-                <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>Yes</div>
-              </div>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="quiz">
+          <div className="progress-bar"><div id="progress-circle">0%</div></div>
+          <div id="quiz-content">
+            <div className="quiz-image" style={divStyle}></div>
+            <h2>{quizTitle}</h2>
+            <p>{quizNum+". "+quizzes[this.state.current]}</p>
+            <div className="quiz-action">
+              <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>No</div>
+              <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>Yes</div>
             </div>
           </div>
-        );
-      }
-    } else return false;
+        </div>
+      );
+    }
   }
 }
 
@@ -331,61 +332,59 @@ class Result extends Component {
   };
 
   render() {
-    if(this.props.stage === "result") {
-      return (
-        <div className="result" id={results}>
-          <div className="result-banner">
-            <h3>你除了是設計師之外，更是一個......</h3>
-          </div>
-          <section id="result-header">
-            <div className="result-image">123</div>
-            <div className="result-content">
-              <h2>{results}</h2>
-              <h3>{strings[results].title}</h3>
-              <div className="result-bar-container">
-                <h6>{strings[results].talent[0].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[0].split('-')[1]}></div>
-                <h6>{strings[results].talent[1].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[1].split('-')[1]}></div>
-                <h6>{strings[results].talent[2].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[2].split('-')[1]}></div>
-              </div>
-            </div>
-          </section>
-          <section id="result-details">
-            <h2>這樣的你，會需要知道什麼呢？</h2>
-            <div className="result-icons-container">
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[0]}</h4>
-                <p>{strings[results].content[0]}</p>
-              </div>
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[1]}</h4>
-                <p>{strings[results].content[1]}</p>
-              </div>
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[2]}</h4>
-                <p>{strings[results].content[2]}</p>
-              </div>
-            </div>
-          </section>
-          <div className="result-banner">
-            <h3>你除了是設計師之外，更是一個<strong>{results}</strong></h3>
-            <p>{strings[results].more}</p>
-          </div>
-          <Mail/>
-          <footer>
-            <div className="container">
-              <a href="/"><div className="logo">Tone</div></a>
-              <p>Copyright © 2017 TONEskill Inc. | All pictures are for editorial use only.</p>
-            </div>
-          </footer>
+    return (
+      <div className="result" id={results}>
+        <div className="result-banner">
+          <h3>你除了是設計師之外，更是一個......</h3>
         </div>
-      );
-    } else return false;
+        <section id="result-header">
+          <div className="result-image">123</div>
+          <div className="result-content">
+            <h2>{results}</h2>
+            <h3>{strings[results].title}</h3>
+            <div className="result-bar-container">
+              <h6>{strings[results].talent[0].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[0].split('-')[1]}></div>
+              <h6>{strings[results].talent[1].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[1].split('-')[1]}></div>
+              <h6>{strings[results].talent[2].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[2].split('-')[1]}></div>
+            </div>
+          </div>
+        </section>
+        <section id="result-details">
+          <h2>這樣的你，會需要知道什麼呢？</h2>
+          <div className="result-icons-container">
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[0]}</h4>
+              <p>{strings[results].content[0]}</p>
+            </div>
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[1]}</h4>
+              <p>{strings[results].content[1]}</p>
+            </div>
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[2]}</h4>
+              <p>{strings[results].content[2]}</p>
+            </div>
+          </div>
+        </section>
+        <div className="result-banner">
+          <h3>你除了是設計師之外，更是一個<strong>{results}</strong></h3>
+          <p>{strings[results].more}</p>
+        </div>
+        <Mail/>
+        <footer>
+          <div className="container">
+            <a href="/"><div className="logo">Tone</div></a>
+            <p>Copyright © 2017 TONEskill Inc. | All pictures are for editorial use only.</p>
+          </div>
+        </footer>
+      </div>
+    );
   }
 }
 
