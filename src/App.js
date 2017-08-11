@@ -5,10 +5,129 @@ import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
 
 /* --- Global Variable --- */
-var results = (window.location.hash === "") ? "" : (window.location.hash).split('#')[1];
-var quizTitle = "X";
+var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1]);
+var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
+
+/* --- Strings --- */
+var strings = {
+  "設計創業家": {
+    "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
+    "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
+    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計控制狂": {
+    "title": "交給你了，我有好好記下來了喲（燦笑）",
+    "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
+    "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計CEO": {
+    "title": "我說要有光，就有了光。",
+    "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
+    "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計偵探": {
+    "title": "真相，永遠只有一個！",
+    "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
+    "skill": ["換位思考", "讀心術", "海龜湯高手"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計科學家": {
+    "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
+    "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
+    "skill": ["動手做做看", "異元素組合力", "科學精神"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計大善人": {
+    "title": "這世界有太多比錢更重要的事了",
+    "talent": ["善良-full", "天真-mid", "小幸運-high"],
+    "skill": ["同理他者", "熱心公益", "召喚世界和平"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計哲學家": {
+    "title": "少即是多，色即是空。",
+    "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
+    "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計探險家": {
+    "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
+    "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
+    "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計說書人": {
+    "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
+    "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
+    "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "雞排攤老闆": {
+    "title": "做什麼設計，現在加盟雞排店還來得及唷～",
+    "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
+    "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  }
+};
+
+var quizzes = {
+  //X
+  "q1": "我對設計有熱情？",
+  "q2": "你是否對於設計冷感了？",
+  "q3": "你的生命難道和設計再也無關了嗎？",
+  //A
+  "q4": "我設計出來的作品是不是具有個人風格非常重要",
+  "q5": "在市場需求和作品原創性中，我認為必須以原創性作為優先考量",
+  "q6": "若是作品能夠廣受大眾喜歡，在個人特色上妥協作品是可以接受的",
+  //B
+  "q7": "我覺得實務比理論來得重要許多",
+  "q8": "開始動手做之前，我會找出所有的相關資料進行研究",
+  "q9": "比起其他設計師，我認為自己是一個 Maker",
+  //C
+  "q10": "結合不同設計概念所產生的衝突感讓我覺得很有趣",
+  "q11": "我自認是一個理性的人",
+  "q12": "比起個人追求，我更想藉由設計力量改善社會問題",
+  //D
+  "q13": "社會設計對我來說是一個超讚的概念",
+  "q14": "我有很在意的社會議題，並且曾經參與其中",
+  "q15": "我一直或曾經試圖藉由設計幫助解決社會問題",
+  //E
+  "q16": "在工作團隊中，我經常擔任激勵他人的角色",
+  "q17": "對於未來我有無限的企圖心",
+  "q18": "我能夠說服一群人做一件很酷的事",
+  //F
+  "q19": "想像力就是我的超能力",
+  "q20": "我其實偷偷覺得自己是怪咖",
+  "q21": "人不瘋狂枉少年",
+  //G
+  "q22": "結合不同設計概念所產生的未知可能讓我覺得很有趣",
+  "q23": "比起其他設計師，我認為自己是一個 Maker",
+  "q24": "我的觀察力很強，連自己都會被自己嚇到",
+  //H
+  "q25": "沒靈感時，該怎麼辦？",
+  //I
+  "q26": "我很能忍受不明確的狀態",
+  "q27": "我喜歡有條理地安排生活與工作",
+  "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
+  "q29": "跟我共事的夥伴和業主都被我控制得妥妥",
+  "q30": "我的設計案99%都準時交件"
+};
+
+var start = (results === "") ? "main" : "result";
 
 /* --- App --- */
 class App extends Component {
@@ -36,6 +155,7 @@ class App extends Component {
     if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
     if(this.state.stage === "quiz") quiz = <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
     if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
+    console.log(results);
     return (
       <div className="App">
         <Helmet>
@@ -65,14 +185,16 @@ class Main extends Component {
       });
       animation.addEventListener("complete", function() {
         animation.destroy();
-        var animationLoopData = require('./json/loop/loop.json');
-        var animationLoop = bodymovin.loadAnimation({
-            container: document.getElementById('main-animation'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            animationData: animationLoopData
-        });
+        if(document.getElementById('main-animation') !== null) {
+          var animationLoopData = require('./json/loop/loop.json');
+          var animationLoop = bodymovin.loadAnimation({
+              container: document.getElementById('main-animation'),
+              renderer: 'svg',
+              loop: true,
+              autoplay: true,
+              animationData: animationLoopData
+          });
+        }
       });
     },400);
   };
@@ -87,7 +209,7 @@ class Main extends Component {
         <div id="main-content">
           <h1>給設計師的專屬測驗</h1>
           <p>每一個設計師，包括你，都不只是設計師。<br/>簡單三分鐘，看看除了設計師之外，你的隱藏身份是什麼？</p>
-          <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗</div>
+          <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗吧</div>
         </div>
       </div>
     );
@@ -129,6 +251,7 @@ class Quiz extends Component {
       if(b) {
         this.props.handler("result");
         results = "雞排攤老闆";
+        window.location.hash = '#'+results;
       } else quizTitle = "A";
       break;
     /*** A ***/
@@ -140,6 +263,8 @@ class Quiz extends Component {
       if(countA >= 2) {
         next = "q25";
         quizTitle = "H";
+        weight = 0;
+        quizWeight = 51;
       } else quizTitle = "B";
       break;
     /*** B ***/
@@ -176,7 +301,11 @@ class Quiz extends Component {
         next = "q26";
         quizTitle = "I";
         results = "設計大善人";
-      } else quizTitle = "E";
+      } else {
+        quizTitle = "E";
+        quizWeight = 61;
+        weight = 2;
+      }
       break;
     /*** E ***/
     case "q18":
@@ -237,6 +366,11 @@ class Quiz extends Component {
       break;
     default:
       break;
+    }
+    if(a.split('q')[1] >= 16 && a.split('q')[1] <= 24) weight = 2;
+    if(next === "q26") {
+      weight = 0;
+      quizWeight = 76;
     }
     quizWeight+=weight;
 
@@ -353,7 +487,7 @@ class Result extends Component {
           </div>
         </section>
         <section id="result-details">
-          <h2>這樣的你，會需要知道什麼呢？</h2>
+          <h3>這樣的你，會需要知道什麼呢？</h3>
           <div className="result-icons-container">
             <div className="result-icons">
               <div>123</div>
@@ -372,7 +506,7 @@ class Result extends Component {
             </div>
           </div>
         </section>
-        <div className="result-banner">
+        <div className="result-banner" id="banner-2">
           <h3>你除了是設計師之外，更是一個<strong>{results}</strong></h3>
           <p>{strings[results].more}</p>
         </div>
@@ -400,6 +534,10 @@ class Mail extends Component {
         animationData: animationData
       })
   };
+  submitForm = () => {
+    
+  }
+
   render() {
     return (
       <div className="mail">
@@ -413,136 +551,17 @@ class Mail extends Component {
             <p>留下你的mail，我們將會寄送更多與設計科學家相關的資訊給你，讓你的更有效率的學習，成為不只是設計師的設計師！</p>
           </div>  
         </div>
-        <form id="mail-subscription">
-          <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" />
-          <div id="mail-button" type="submit">送出</div>
+        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" novalidate>
+          <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
+          <div id="mail-button" type="submit" name="subscribe" onClick={this.submitForm}>送出</div>
         </form>
         <div className="share-action">
-          <div className="action-button" id="share-button">分享到 Facebook</div>
-          <div className="action-button" id="share-quiz">分享到 Facebook</div>
+          <div className="action-button" id="share-button">分享此遊戲</div>
+          <div className="action-button" id="share-quiz">分享遊戲結果</div>
         </div>
       </div>
     );
   }
 }
-
-/* --- Strings --- */
-var strings = {
-  "設計創業家": {
-    "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
-    "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計控制狂": {
-    "title": "交給你了，我有好好記下來了喲（燦笑）",
-    "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
-    "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計CEO": {
-    "title": "我說要有光，就有了光。",
-    "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
-    "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計偵探": {
-    "title": "真相，永遠只有一個！",
-    "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
-    "skill": ["換位思考", "讀心術", "海龜湯高手"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計科學家": {
-    "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
-    "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
-    "skill": ["動手做做看", "異元素組合力", "科學精神"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計大善人": {
-    "title": "這世界有太多比錢更重要的事了",
-    "talent": ["善良-full", "天真-mid", "小幸運-high"],
-    "skill": ["同理他者", "熱心公益", "召喚世界和平"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計哲學家": {
-    "title": "少即是多，色即是空。",
-    "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
-    "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計探險家": {
-    "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
-    "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
-    "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計說書人": {
-    "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
-    "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
-    "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "雞排攤老闆": {
-    "title": "做什麼設計，現在加盟雞排店還來得及唷～",
-    "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
-    "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  }
-};
-
-var quizzes = {
-  //X
-  "q1": "我對設計有熱情？",
-  "q2": "你是否對於設計冷感了？",
-  "q3": "你的生命難道和設計再也無關了嗎？",
-  //A
-  "q4": "我設計出來的作品是不是具有個人風格非常重要",
-  "q5": "在市場需求和作品原創性中，我認為必須以原創性作為優先考量",
-  "q6": "若是作品能夠廣受大眾喜歡，在個人特色上妥協作品是可以接受的",
-  //B
-  "q7": "我覺得實務比理論來得重要許多",
-  "q8": "開始動手做之前，我會找出所有的相關資料進行研究",
-  "q9": "比起其他設計師，我認為自己是一個 Maker",
-  //C
-  "q10": "結合不同設計概念所產生的衝突感讓我覺得很有趣",
-  "q11": "我自認是一個理性的人",
-  "q12": "比起個人追求，我更想藉由設計力量改善社會問題",
-  //D
-  "q13": "社會設計對我來說是一個超讚的概念",
-  "q14": "我有很在意的社會議題，並且曾經參與其中",
-  "q15": "我一直或曾經試圖藉由設計幫助解決社會問題",
-  //E
-  "q16": "在工作團隊中，我經常擔任激勵他人的角色",
-  "q17": "對於未來我有無限的企圖心",
-  "q18": "我能夠說服一群人做一件很酷的事",
-  //F
-  "q19": "想像力就是我的超能力",
-  "q20": "我其實偷偷覺得自己是怪咖",
-  "q21": "人不瘋狂枉少年",
-  //G
-  "q22": "結合不同設計概念所產生的未知可能讓我覺得很有趣",
-  "q23": "比起其他設計師，我認為自己是一個 Maker",
-  "q24": "我的觀察力很強，連自己都會被自己嚇到",
-  //H
-  "q25": "沒靈感時，該怎麼辦？",
-  //I
-  "q26": "我很能忍受不明確的狀態",
-  "q27": "我喜歡有條理地安排生活與工作",
-  "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
-  "q29": "跟我共事的夥伴和業主都被我控制得妥妥",
-  "q30": "我的設計案99%都準時交件"
-};
-
-var start = (strings[results] == null) ? "main" : "result";
 
 export default App;
