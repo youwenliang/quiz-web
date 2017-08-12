@@ -124,7 +124,50 @@ var quizzes = {
   "q27": "我喜歡有條理地安排生活與工作",
   "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
   "q29": "跟我共事的夥伴和業主都被我控制得妥妥",
-  "q30": "我的設計案99%都準時交件"
+  "q30": "我的設計案99%都準時交件",
+  "done": ""
+};
+
+var answers = {
+  //X
+  "q1": ["是", "否"],
+  "q2": ["是", "否"],
+  "q3": ["是", "否"],
+  //A
+  "q4": ["是", "否"],
+  "q5": ["是", "否"],
+  "q6": ["是", "否"],
+  //B
+  "q7": ["是", "否"],
+  "q8": ["是", "否"],
+  "q9": ["是", "否"],
+  //C
+  "q10": ["是", "否"],
+  "q11": ["是", "否"],
+  "q12": ["是", "否"],
+  //D
+  "q13": ["是", "否"],
+  "q14": ["是", "否"],
+  "q15": ["是", "否"],
+  //E
+  "q16": ["是", "否"],
+  "q17": ["是", "否"],
+  "q18": ["是", "否"],
+  //F
+  "q19": ["是", "否"],
+  "q20": ["是", "否"],
+  "q21": ["是", "否"],
+  //G
+  "q22": ["是", "否"],
+  "q23": ["是", "否"],
+  "q24": ["是", "否"],
+  //I
+  "q26": ["是", "否"],
+  "q27": ["是", "否"],
+  "q28": ["是", "否"],
+  "q29": ["是", "否"],
+  "q30": ["是", "否"],
+  "done": ["",""]
 };
 
 var start = (results === "") ? "main" : "result";
@@ -250,6 +293,9 @@ class Quiz extends Component {
     case "q3":
       if(b) {
         this.props.handler("result");
+        next = "done";
+        quizTitle = "";
+        quizNum = "";
         results = "雞排攤老闆";
         window.location.hash = '#'+results;
       } else quizTitle = "A";
@@ -356,6 +402,8 @@ class Quiz extends Component {
       if(currentAnswer["q30"]) countI++;
       console.log(countI);
       next = "done";
+      quizTitle = "";
+      quizNum = "";
       if(countI === 5) {
         results = "設計控制狂";
         this.props.handler("result");
@@ -375,6 +423,7 @@ class Quiz extends Component {
     quizWeight+=weight;
 
     var temp = this;
+
     $('#quiz-content').addClass('switch');
     $('#progress-circle').html((quizWeight-1)+'%');
 
@@ -383,6 +432,7 @@ class Quiz extends Component {
     $('.progress-bar').css('width', w/100*(quizWeight-1)+'px');
 
     setTimeout(function(){
+      if(next === "done") $('.progress-bar').css('display','none');
       temp.setState({
         current: next,
         answers: currentAnswer
@@ -390,8 +440,11 @@ class Quiz extends Component {
     }, 200);
     setTimeout(function(){
       if(next !== "done") $('#quiz-content').removeClass('switch');
-      else console.log("done!");
+      else $('#loading').removeClass('fade');
     }, 400);
+    setTimeout(function(){
+      if(next === "done") $('#loading').addClass('fade');
+    }, 1200);
   }
 
   updateDimensions() {
@@ -445,8 +498,8 @@ class Quiz extends Component {
             <h2>{quizTitle}</h2>
             <p>{quizNum+". "+quizzes[this.state.current]}</p>
             <div className="quiz-action">
-              <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>No</div>
-              <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>Yes</div>
+              <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
+              <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>{answers[this.state.current][0]}</div>
             </div>
           </div>
         </div>
@@ -535,7 +588,7 @@ class Mail extends Component {
       })
   };
   submitForm = () => {
-    
+
   }
 
   render() {
@@ -551,7 +604,7 @@ class Mail extends Component {
             <p>留下你的mail，我們將會寄送更多與設計科學家相關的資訊給你，讓你的更有效率的學習，成為不只是設計師的設計師！</p>
           </div>  
         </div>
-        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" novalidate>
+        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
           <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
           <div id="mail-button" type="submit" name="subscribe" onClick={this.submitForm}>送出</div>
         </form>

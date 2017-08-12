@@ -10,6 +10,21 @@ registerServiceWorker();
 
 $(document).ready(function(){
   $('body').scrollTop(0);
+  var $div = $('#preload_area');
+  var array = [];
+  $.each($div.css('background-image').split(', '), function(key, value){
+    array.push(value.replace(/^url\(["']?/, '').replace(/["']?\)$/, ''));
+  });
+  var img = [];
+  var count = 0;
+  for (var i = 0; i < array.length; i++) {
+      $('<img/>').attr('src', array[i]).on('load', function() {
+        $(this).remove(); 
+        console.log(count);
+        count++;
+        if(count === array.length) $('#loading').addClass('fade');
+      });
+  }
 });
 
 $(window).on('hashchange', function() {
