@@ -478,7 +478,7 @@ class Quiz extends Component {
           <div className="progress-bar"><div id="progress-circle">0%</div></div>
           <div id="quiz-content">
             <div className="quiz-image" style={divStyle}></div>
-            <h2>{quizTitle}</h2>
+            {/*<h2>{quizTitle}</h2>*/}
             <p>{quizNum+". "+quizzes[this.state.current]}</p>
             <div className="quiz-action three">
               <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
@@ -495,7 +495,7 @@ class Quiz extends Component {
           <div className="progress-bar"><div id="progress-circle">0%</div></div>
           <div id="quiz-content">
             <div className="quiz-image" style={divStyle}></div>
-            <h2>{quizTitle}</h2>
+            {/*<h2>{quizTitle}</h2>*/}
             <p>{quizNum+". "+quizzes[this.state.current]}</p>
             <div className="quiz-action">
               <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
