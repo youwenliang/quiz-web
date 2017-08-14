@@ -104,7 +104,8 @@ green-dark: ;
   transition: background-color .1s ease-in-out;          
 }
 
-.action-button:hover {
+.action-button:hover,
+.action-button:active {
   background-color: #f9ba00;
   transition: background-color .1s ease-in-out;
 }
@@ -195,7 +196,8 @@ green-dark: ;
   transition: all .1s ease-in-out;
 }
 
-.quiz-button:hover {
+.quiz-button:hover,
+.quiz-button:active {
   background-color: #fcca1d;
   color: #fff;
   transition: all .1s ease-in-out;
@@ -243,6 +245,7 @@ green-dark: ;
   user-select: none;
   left: 0;
   transition: all .4s ease-in-out;
+  transform: translateX(-25px);
 }
 
 section {
@@ -498,7 +501,8 @@ section {
   transition: background-color .1s ease-in-out;
 }
 
-#mail-button:hover {
+#mail-button:hover,
+#mail-button:active {
   background-color: #f9ba00;
   transition: background-color .1s ease-in-out;
 }
@@ -535,7 +539,8 @@ section {
   letter-spacing: 2px;       
 }
 
-#share-button:hover {
+#share-button:hover,
+#share-button:active {
   background-color: #d5f7f5;
   color: #61b3c0;
   transition: all .1s ease-in-out;
@@ -556,7 +561,10 @@ section {
   letter-spacing: 2px;       
 }
 
-#share-quiz:hover {
+#share-quiz i {margin-right: 6px;}
+
+#share-quiz:hover,
+#share-quiz:active {
   background-color: #61b3c0;
   border: 3px #61b3c0 solid;
   color: #fff;
@@ -615,24 +623,6 @@ footer .container {
   .share-action {
     width: 100%;
     flex-direction: column;
-  }
-  .action-button:focus {
-    background-color: #f9ba00;
-    transition: background-color .1s ease-in-out;
-  }
-  .action-button:hover {
-    background-color: #fcca1d;
-  }
-
-  .quiz-button:focus {
-    background-color: #fcca1d;
-    color: #fff;
-    transition: all .1s ease-in-out;
-  }
-
-  .quiz-button:hover {
-    background: none;
-    color: #333333;
   }
 }
 

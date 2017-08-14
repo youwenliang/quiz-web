@@ -588,6 +588,10 @@ class Mail extends Component {
       })
   };
 
+  back() {
+    window.location.href = "/";
+  }
+
   render() {
     return (
       <div className="mail">
@@ -606,8 +610,9 @@ class Mail extends Component {
           <input id="mail-button" type="submit" name="subscribe" value="送出" />
         </form>
         <div className="share-action">
-          <div className="action-button" id="share-button">分享此遊戲</div>
-          <div className="action-button" id="share-quiz">分享遊戲結果</div>
+          <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
+          <div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>
+分享結果</div>
         </div>
       </div>
     );
