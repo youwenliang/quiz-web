@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="237" height="62" viewBox="0 0 237 62">
-  <g fill="none" fill-rule="evenodd">
-    <polygon fill="#FBB321" points="176.967 8.33 176.967 61.523 207.796 61.523 236.438 8.33"/>
-    <polygon fill="#FEC338" points=".713 .289 .713 53.481 192.313 53.481 220.353 .289"/>
-    <path stroke="#FEFEFE" stroke-linejoin="round" stroke-width=".345" d="M220.352009,0.287862513 L191.710218,53.4807677"/>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68.24 17.46"><defs><style>.cls-1{fill:#fcb422;}.cls-2{fill:#ffc438;}.cls-3{fill:#cd9111;}.cls-4{fill:none;stroke:#fff;stroke-linejoin:round;stroke-width:0.34px;}</style></defs><title>Asset 2</title><g id="Layer_2" data-name="Layer 2"><g id="圖層_1" data-name="圖層 1"><polygon class="cls-1" points="51.36 2.36 68.24 2.36 60.11 17.46 51.36 17.46 51.36 2.36"/><polygon class="cls-2" points="0 0.08 63.67 0.08 55.55 15.18 0 15.18 0 0.08"/><polygon class="cls-3" points="55.55 15.18 51.36 17.46 51.36 15.18 55.55 15.18"/><line class="cls-4" x1="63.67" y1="0.08" x2="55.55" y2="15.18"/></g></g></svg>

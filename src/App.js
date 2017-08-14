@@ -2,12 +2,175 @@ import React, { Component } from 'react';
 import './App.css';
 import $ from 'jquery';
 import bodymovin from 'bodymovin';
+import {Helmet} from 'react-helmet';
 
 /* --- Global Variable --- */
-var results = (window.location.hash === "") ? "" : (window.location.hash).split('#')[1];
-var quizTitle = "X";
+var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1]);
+var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
+
+/* --- Strings --- */
+var strings = {
+  "設計創業家": {
+    "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
+    "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
+    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計控制狂": {
+    "title": "交給你了，我有好好記下來了喲（燦笑）",
+    "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
+    "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計CEO": {
+    "title": "我說要有光，就有了光。",
+    "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
+    "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計偵探": {
+    "title": "真相，永遠只有一個！",
+    "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
+    "skill": ["換位思考", "讀心術", "海龜湯高手"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計科學家": {
+    "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
+    "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
+    "skill": ["動手做做看", "異元素組合力", "科學精神"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計大善人": {
+    "title": "這世界有太多比錢更重要的事了",
+    "talent": ["善良-full", "天真-mid", "小幸運-high"],
+    "skill": ["同理他者", "熱心公益", "召喚世界和平"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計哲學家": {
+    "title": "少即是多，色即是空。",
+    "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
+    "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計探險家": {
+    "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
+    "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
+    "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "設計說書人": {
+    "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
+    "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
+    "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  },
+  "雞排攤老闆": {
+    "title": "做什麼設計，現在加盟雞排店還來得及唷～",
+    "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
+    "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+  }
+};
+
+var quizzes = {
+  //X
+  "q1": "我對設計有熱情？",
+  "q2": "你是否對於設計冷感了？",
+  "q3": "你的生命難道和設計再也無關了嗎？",
+  //A
+  "q4": "我設計出來的作品是不是具有個人風格非常重要",
+  "q5": "在市場需求和作品原創性中，我認為必須以原創性作為優先考量",
+  "q6": "若是作品能夠廣受大眾喜歡，在個人特色上妥協作品是可以接受的",
+  //B
+  "q7": "我覺得實務比理論來得重要許多",
+  "q8": "開始動手做之前，我會找出所有的相關資料進行研究",
+  "q9": "比起其他設計師，我認為自己是一個 Maker",
+  //C
+  "q10": "結合不同設計概念所產生的衝突感讓我覺得很有趣",
+  "q11": "我自認是一個理性的人",
+  "q12": "比起個人追求，我更想藉由設計力量改善社會問題",
+  //D
+  "q13": "社會設計對我來說是一個超讚的概念",
+  "q14": "我有很在意的社會議題，並且曾經參與其中",
+  "q15": "我一直或曾經試圖藉由設計幫助解決社會問題",
+  //E
+  "q16": "在工作團隊中，我經常擔任激勵他人的角色",
+  "q17": "對於未來我有無限的企圖心",
+  "q18": "我能夠說服一群人做一件很酷的事",
+  //F
+  "q19": "想像力就是我的超能力",
+  "q20": "我其實偷偷覺得自己是怪咖",
+  "q21": "人不瘋狂枉少年",
+  //G
+  "q22": "結合不同設計概念所產生的未知可能讓我覺得很有趣",
+  "q23": "比起其他設計師，我認為自己是一個 Maker",
+  "q24": "我的觀察力很強，連自己都會被自己嚇到",
+  //H
+  "q25": "沒靈感時，該怎麼辦？",
+  //I
+  "q26": "我很能忍受不明確的狀態",
+  "q27": "我喜歡有條理地安排生活與工作",
+  "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
+  "q29": "跟我共事的夥伴和業主都被我控制得妥妥",
+  "q30": "我的設計案99%都準時交件",
+  "done": ""
+};
+
+var answers = {
+  //X
+  "q1": ["是", "否"],
+  "q2": ["是", "否"],
+  "q3": ["是", "否"],
+  //A
+  "q4": ["是", "否"],
+  "q5": ["是", "否"],
+  "q6": ["是", "否"],
+  //B
+  "q7": ["是", "否"],
+  "q8": ["是", "否"],
+  "q9": ["是", "否"],
+  //C
+  "q10": ["是", "否"],
+  "q11": ["是", "否"],
+  "q12": ["是", "否"],
+  //D
+  "q13": ["是", "否"],
+  "q14": ["是", "否"],
+  "q15": ["是", "否"],
+  //E
+  "q16": ["是", "否"],
+  "q17": ["是", "否"],
+  "q18": ["是", "否"],
+  //F
+  "q19": ["是", "否"],
+  "q20": ["是", "否"],
+  "q21": ["是", "否"],
+  //G
+  "q22": ["是", "否"],
+  "q23": ["是", "否"],
+  "q24": ["是", "否"],
+  //I
+  "q26": ["是", "否"],
+  "q27": ["是", "否"],
+  "q28": ["是", "否"],
+  "q29": ["是", "否"],
+  "q30": ["是", "否"],
+  "done": ["",""]
+};
+
+var start = (results === "") ? "main" : "result";
 
 /* --- App --- */
 class App extends Component {
@@ -28,12 +191,23 @@ class App extends Component {
   }
 
   render() {
+    let main = null;
+    let quiz = null;
     let result = null;
+    var title = results === "" ? "給設計師的專屬測驗" : "你是一個"+results;
+    if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
+    if(this.state.stage === "quiz") quiz = <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
     if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
+    console.log(results);
     return (
       <div className="App">
-        <Main stage={this.state.stage} handler={this.handler.bind(this)}/>
-        <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
+        <Helmet>
+          <meta property="og:title" content={"《不只是設計師》- "+title } />
+          <meta name="description" content={results} />
+          <title>{"《不只是設計師》- "+title}</title>
+        </Helmet>
+        {main}
+        {quiz}
         {result}
       </div>
     );
@@ -54,34 +228,34 @@ class Main extends Component {
       });
       animation.addEventListener("complete", function() {
         animation.destroy();
-        var animationLoopData = require('./json/loop/loop.json');
-        var animationLoop = bodymovin.loadAnimation({
-            container: document.getElementById('main-animation'),
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            animationData: animationLoopData
-        });
+        if(document.getElementById('main-animation') !== null) {
+          var animationLoopData = require('./json/loop/loop.json');
+          var animationLoop = bodymovin.loadAnimation({
+              container: document.getElementById('main-animation'),
+              renderer: 'svg',
+              loop: true,
+              autoplay: true,
+              animationData: animationLoopData
+          });
+        }
       });
     },400);
   };
 
   render() {
     console.log(this.props.stage);
-    if(this.props.stage === "main") {
-      return (
-        <div className="main">
-          <div id="main-header">
-            <div id="main-animation"></div>
-          </div>
-          <div id="main-content">
-            <h1>給設計師的專屬測驗</h1>
-            <p>每一個設計師，包括你，都不只是設計師。<br/>簡單三分鐘，看看除了設計師之外，你的隱藏身份是什麼？</p>
-            <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗</div>
-          </div>
+    return (
+      <div className="main">
+        <div id="main-header">
+          <div id="main-animation"></div>
         </div>
-      );
-    } else return false;
+        <div id="main-content">
+          <h1>給設計師的專屬測驗</h1>
+          <p>每一個設計師，包括你，都不只是設計師。<br/>簡單三分鐘，看看除了設計師之外，你的隱藏身份是什麼？</p>
+          <div className="action-button" onClick={() => this.props.handler("quiz")}>開始測驗吧</div>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -119,7 +293,11 @@ class Quiz extends Component {
     case "q3":
       if(b) {
         this.props.handler("result");
+        next = "done";
+        quizTitle = "";
+        quizNum = "";
         results = "雞排攤老闆";
+        window.location.hash = '#'+results;
       } else quizTitle = "A";
       break;
     /*** A ***/
@@ -131,6 +309,8 @@ class Quiz extends Component {
       if(countA >= 2) {
         next = "q25";
         quizTitle = "H";
+        weight = 0;
+        quizWeight = 51;
       } else quizTitle = "B";
       break;
     /*** B ***/
@@ -163,11 +343,15 @@ class Quiz extends Component {
       if(currentAnswer["q13"]) countD++;
       if(currentAnswer["q14"]) countD++;
       if(currentAnswer["q15"]) countD++;
-      if(countD >= 2) {
+      if(countD > 2) {
         next = "q26";
         quizTitle = "I";
         results = "設計大善人";
-      } else quizTitle = "E";
+      } else {
+        quizTitle = "E";
+        quizWeight = 61;
+        weight = 2;
+      }
       break;
     /*** E ***/
     case "q18":
@@ -218,6 +402,8 @@ class Quiz extends Component {
       if(currentAnswer["q30"]) countI++;
       console.log(countI);
       next = "done";
+      quizTitle = "";
+      quizNum = "";
       if(countI === 5) {
         results = "設計控制狂";
         this.props.handler("result");
@@ -229,9 +415,15 @@ class Quiz extends Component {
     default:
       break;
     }
+    if(a.split('q')[1] >= 16 && a.split('q')[1] <= 24) weight = 2;
+    if(next === "q26") {
+      weight = 0;
+      quizWeight = 76;
+    }
     quizWeight+=weight;
 
     var temp = this;
+
     $('#quiz-content').addClass('switch');
     $('#progress-circle').html((quizWeight-1)+'%');
 
@@ -240,6 +432,7 @@ class Quiz extends Component {
     $('.progress-bar').css('width', w/100*(quizWeight-1)+'px');
 
     setTimeout(function(){
+      if(next === "done") $('.progress-bar').css('display','none');
       temp.setState({
         current: next,
         answers: currentAnswer
@@ -247,8 +440,11 @@ class Quiz extends Component {
     }, 200);
     setTimeout(function(){
       if(next !== "done") $('#quiz-content').removeClass('switch');
-      else console.log("done!");
+      else $('#loading').removeClass('fade');
     }, 400);
+    setTimeout(function(){
+      if(next === "done") $('#loading').addClass('fade');
+    }, 1200);
   }
 
   updateDimensions() {
@@ -273,51 +469,47 @@ class Quiz extends Component {
   }
 
   render() {
-    if(this.props.stage === "quiz") {
-      if (this.state.current === "q25") {
-        return (
-          <div className="quiz">
-            <div className="progress-bar"><div id="progress-circle">0%</div></div>
-            <div id="quiz-content">
-              <div className="quiz-image"></div>
-              <h2>{quizTitle}</h2>
-              <p>{quizNum+". "+quizzes[this.state.current]}</p>
-              <div className="quiz-action three">
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
-                <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
-              </div>
+    var divStyle = {
+      backgroundImage: "url(images/quiz/"+this.state.current+".png"
+    }
+    if (this.state.current === "q25") {
+      return (
+        <div className="quiz">
+          <div className="progress-bar"><div id="progress-circle">0%</div></div>
+          <div id="quiz-content">
+            <div className="quiz-image" style={divStyle}></div>
+            {/*<h2>{quizTitle}</h2>*/}
+            <p>{quizNum+". "+quizzes[this.state.current]}</p>
+            <div className="quiz-action three">
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
+              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
             </div>
           </div>
-        );
-      }
-      else {
-        return (
-          <div className="quiz">
-            <div className="progress-bar"><div id="progress-circle">0%</div></div>
-            <div id="quiz-content">
-              <div className="quiz-image"></div>
-              <h2>{quizTitle}</h2>
-              <p>{quizNum+". "+quizzes[this.state.current]}</p>
-              <div className="quiz-action">
-                <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>No</div>
-                <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>Yes</div>
-              </div>
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="quiz">
+          <div className="progress-bar"><div id="progress-circle">0%</div></div>
+          <div id="quiz-content">
+            <div className="quiz-image" style={divStyle}></div>
+            {/*<h2>{quizTitle}</h2>*/}
+            <p>{quizNum+". "+quizzes[this.state.current]}</p>
+            <div className="quiz-action">
+              <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
+              <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>{answers[this.state.current][0]}</div>
             </div>
           </div>
-        );
-      }
-    } else return false;
+        </div>
+      );
+    }
   }
 }
 
 /* --- Result --- */
 class Result extends Component {
-
-  changeTags = () => {
-    $("meta[property='og\\:title']").attr("content", results);
-    $("title").html("《不只是設計師》- 你是一個"+results);
-  };
 
   componentDidMount = () => {
     console.log("mount-result");
@@ -327,63 +519,59 @@ class Result extends Component {
   };
 
   render() {
-    if(this.props.stage === "result") {
-      //Change Meta Tags
-      this.changeTags();
-      return (
-        <div className="result" id={results}>
-          <div className="result-banner">
-            <h3>你除了是設計師之外，更是一個......</h3>
-          </div>
-          <section id="result-header">
-            <div className="result-image">123</div>
-            <div className="result-content">
-              <h2>{results}</h2>
-              <h3>{strings[results].title}</h3>
-              <div className="result-bar-container">
-                <h6>{strings[results].talent[0].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[0].split('-')[1]}></div>
-                <h6>{strings[results].talent[1].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[1].split('-')[1]}></div>
-                <h6>{strings[results].talent[2].split('-')[0]}</h6>
-                <div className={"result-bar "+strings[results].talent[2].split('-')[1]}></div>
-              </div>
-            </div>
-          </section>
-          <section id="result-details">
-            <h2>這樣的你，會需要知道什麼呢？</h2>
-            <div className="result-icons-container">
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[0]}</h4>
-                <p>{strings[results].content[0]}</p>
-              </div>
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[1]}</h4>
-                <p>{strings[results].content[1]}</p>
-              </div>
-              <div className="result-icons">
-                <div>123</div>
-                <h4>{strings[results].skill[2]}</h4>
-                <p>{strings[results].content[2]}</p>
-              </div>
-            </div>
-          </section>
-          <div className="result-banner">
-            <h3>你除了是設計師之外，更是一個<strong>{results}</strong></h3>
-            <p>{strings[results].more}</p>
-          </div>
-          <Mail/>
-          <footer>
-            <div className="container">
-              <a href="/"><div className="logo">Tone</div></a>
-              <p>Copyright © 2017 TONEskill Inc. | All pictures are for editorial use only.</p>
-            </div>
-          </footer>
+    return (
+      <div className="result" id={results}>
+        <div className="result-banner">
+          <h3>你除了是設計師之外，更是一個......</h3>
         </div>
-      );
-    } else return false;
+        <section id="result-header">
+          <div className="result-image">123</div>
+          <div className="result-content">
+            <h2>{results}</h2>
+            <h3>{strings[results].title}</h3>
+            <div className="result-bar-container">
+              <h6>{strings[results].talent[0].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[0].split('-')[1]}></div>
+              <h6>{strings[results].talent[1].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[1].split('-')[1]}></div>
+              <h6>{strings[results].talent[2].split('-')[0]}</h6>
+              <div className={"result-bar "+strings[results].talent[2].split('-')[1]}></div>
+            </div>
+          </div>
+        </section>
+        <section id="result-details">
+          <h3>這樣的你，會需要知道什麼呢？</h3>
+          <div className="result-icons-container">
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[0]}</h4>
+              <p>{strings[results].content[0]}</p>
+            </div>
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[1]}</h4>
+              <p>{strings[results].content[1]}</p>
+            </div>
+            <div className="result-icons">
+              <div>123</div>
+              <h4>{strings[results].skill[2]}</h4>
+              <p>{strings[results].content[2]}</p>
+            </div>
+          </div>
+        </section>
+        <div className="result-banner" id="banner-2">
+          <h3>你除了是設計師之外，更是一個<strong>{results}</strong></h3>
+          <p>{strings[results].more}</p>
+        </div>
+        <Mail/>
+        <footer>
+          <div className="container">
+            <a href="/"><div className="logo">Tone</div></a>
+            <p>Copyright © 2017 TONEskill Inc. | All pictures are for editorial use only.</p>
+          </div>
+        </footer>
+      </div>
+    );
   }
 }
 
@@ -399,6 +587,10 @@ class Mail extends Component {
         animationData: animationData
       })
   };
+  submitForm = () => {
+
+  }
+
   render() {
     return (
       <div className="mail">
@@ -412,136 +604,17 @@ class Mail extends Component {
             <p>留下你的mail，我們將會寄送更多與設計科學家相關的資訊給你，讓你的更有效率的學習，成為不只是設計師的設計師！</p>
           </div>  
         </div>
-        <form id="mail-subscription">
-          <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" />
-          <div id="mail-button" type="submit">送出</div>
+        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
+          <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
+          <div id="mail-button" type="submit" name="subscribe" onClick={this.submitForm}>送出</div>
         </form>
         <div className="share-action">
-          <div className="action-button" id="share-button">分享到 Facebook</div>
-          <div className="action-button" id="share-quiz">分享到 Facebook</div>
+          <div className="action-button" id="share-button">分享此遊戲</div>
+          <div className="action-button" id="share-quiz">分享遊戲結果</div>
         </div>
       </div>
     );
   }
 }
-
-/* --- Strings --- */
-var strings = {
-  "設計創業家": {
-    "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
-    "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計控制狂": {
-    "title": "交給你了，我有好好記下來了喲（燦笑）",
-    "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
-    "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計CEO": {
-    "title": "我說要有光，就有了光。",
-    "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計偵探": {
-    "title": "真相，永遠只有一個！",
-    "talent": ["邏輯力-high", "肝指數-high", "M傾向-mid"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計科學家": {
-    "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
-    "talent": ["好運-high", "肝指數-mid", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計大善人": {
-    "title": "這世界有太多比錢更重要的事了",
-    "talent": ["好運-full", "肝指數-mid", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計哲學家": {
-    "title": "少即是多，色即是空。",
-    "talent": ["好運-low", "肝指數-high", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計探險家": {
-    "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
-    "talent": ["好運-high", "肝指數-low", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "設計說書人": {
-    "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
-    "talent": ["好運-high", "肝指數-low", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  },
-  "雞排攤老闆": {
-    "title": "做什麼設計，現在加盟雞排店還來得及唷～",
-    "talent": ["好運-high", "肝指數-high", "M傾向-high"],
-    "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
-    "content": ["s1", "s2", "s3"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
-  }
-};
-
-var quizzes = {
-  //X
-  "q1": "我對設計有熱情？",
-  "q2": "你是否對於設計冷感了？",
-  "q3": "你的生命難道和設計再也無關了嗎？",
-  //A
-  "q4": "我設計出來的作品是不是具有個人風格非常重要",
-  "q5": "在市場需求和作品原創性中，我認為必須以原創性作為優先考量",
-  "q6": "若是作品能夠廣受大眾喜歡，在個人特色上妥協作品是可以接受的",
-  //B
-  "q7": "我覺得實務比理論來得重要許多",
-  "q8": "開始動手做之前，我會找出所有的相關資料進行研究",
-  "q9": "比起其他設計師，我認為自己是一個 Maker",
-  //C
-  "q10": "結合不同設計概念所產生的衝突感讓我覺得很有趣",
-  "q11": "我自認是一個理性的人",
-  "q12": "比起個人追求，我更想藉由設計力量改善社會問題",
-  //D
-  "q13": "社會設計對我來說是一個超讚的概念",
-  "q14": "我有很在意的社會議題，並且曾經參與其中",
-  "q15": "我一直或曾經試圖藉由設計幫助解決社會問題",
-  //E
-  "q16": "在工作團隊中，我經常擔任激勵他人的角色",
-  "q17": "對於未來我有無限的企圖心",
-  "q18": "我能夠說服一群人做一件很酷的事",
-  //F
-  "q19": "想像力就是我的超能力",
-  "q20": "我其實偷偷覺得自己是怪咖",
-  "q21": "人不瘋狂枉少年",
-  //G
-  "q22": "結合不同設計概念所產生的未知可能讓我覺得很有趣",
-  "q23": "比起其他設計師，我認為自己是一個 Maker",
-  "q24": "我的觀察力很強，連自己都會被自己嚇到",
-  //H
-  "q25": "沒靈感時，該怎麼辦？",
-  //I
-  "q26": "我很能忍受不明確的狀態",
-  "q27": "我喜歡有條理地安排生活與工作",
-  "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
-  "q29": "跟我共事的夥伴和業主都被我控制得妥妥",
-  "q30": "我的設計案99%都準時交件"
-};
-
-var start = (strings[results] == null) ? "main" : "result";
 
 export default App;

@@ -9,7 +9,7 @@ body {
   min-height: 100%;
   position: relative;
   font-family: 'Noto Sans CJKtc', sans-serif;
-  color: #4f4f4f;
+  color: #333333;
   line-height: 1.61;
   opacity: 1;
   transition: opacity 400ms ease-in-out;
@@ -19,6 +19,28 @@ body {
 
 body.fade {
   opacity: 0;
+  transition: opacity 400ms ease-in-out;
+}
+
+#loading {
+  width: 100%;
+  height: 100vh;
+  display: block;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  background-image: url(images/loading.gif);
+  background-position: center center;
+  background-size: 80px 80px;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  opacity: 1;
+  pointer-events: none;
+}
+
+#loading.fade {
+  opacity: 0;
+  height: 100vh;
   transition: opacity 400ms ease-in-out;
 }
 
@@ -44,19 +66,17 @@ h6 {
   margin: 20px 0 15px;
 }
 
-@font-face {
-    font-family: 'Noto Sans CJKtc';
-    src: url(fonts/NotoSansCJKtc-Regular.otf);
-}
+/* h1 through h6 basic */
+h1, h2, h3, h4, h5, h6, p, div {font-family: aktiv-grotesk, 'PingFangTC', '微軟正黑體', Helvetica, Arial, sans-serif;}
 
-@font-face {
-    font-family: 'Noto Sans CJKtc';
-    src: url(fonts/NotoSansCJKtc-Medium.otf);
-    font-weight: 600;
-}
+/*h1{font-weight: 200;}
+h2, h3{font-weight: 300;}
+h4, h5, h6{font-weight: 500;}
+p {font-weight: 300;}*/
 
-@font-face {
-    font-family: 'Noto Sans CJKtc';
-    src: url(fonts/NotoSansCJKtc-Light.otf);
-    font-weight: 200;
+#preload_area {
+  background-image: url(images/result-bg.svg), url(images/logo.svg), url(images/color-logo.svg);
+  width: 0px;
+  height: 0px;
+  display: inline;
 }
