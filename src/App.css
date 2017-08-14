@@ -9,9 +9,9 @@ green-dark: ;
 #root {
   min-height: 100%;
   width: 100%;
-  padding: 60px 0;
+  /*padding: 60px 0;*/
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
 }
 
 .App {
@@ -27,7 +27,7 @@ green-dark: ;
 #main-header {
   width: 100%;
   height: 360px;
-  margin-top: 0px;
+  margin-top: 40px;
   background-color: #78c9d7;
 }
 
@@ -49,7 +49,6 @@ green-dark: ;
 }
 
 #main-content h1 {
-  color: #4f4f4f;
   font-size: 30px;
   line-height: 2;
   font-weight: 600;
@@ -71,7 +70,6 @@ green-dark: ;
 }*/
 
 #main-content p {
-  color: #4f4f4f;
   font-size: 16px;
   line-height: 1.61;
   font-weight: 600;
@@ -113,6 +111,7 @@ green-dark: ;
 
 .quiz {
   margin: 0 auto;
+  margin-top: 70px;
 }
 
 #quiz-content.switch {
@@ -143,7 +142,6 @@ green-dark: ;
 }
 
 .quiz p {
-  color: #4f4f4f;
   font-size: 24px;
   line-height: 33px;
   margin-bottom: 50px;
@@ -178,7 +176,6 @@ green-dark: ;
   padding: 20px;
   border: 3px #fcca1d solid;
   border-radius: 40px;
-  color: #4f4f4f;
   font-size: 16px;
   line-height: 1.61;
   font-weight: 600;
@@ -467,7 +464,7 @@ section {
   background-color: #f7f7f7;
 }
 
-#mc-embedded-subscribe-form input {
+#mc-embedded-subscribe-form input[type=email] {
   height: 50px;
   border: none;
   background: none;
@@ -475,7 +472,10 @@ section {
   box-sizing: border-box;
   width: calc(100% - 120px);
   font-size: 18px;
-  color: #4F4F4F;
+}
+
+#mc-embedded-subscribe-form input[type=submit] {
+  border: none;
 }
 
 #mail-button {
@@ -616,7 +616,24 @@ footer .container {
     width: 100%;
     flex-direction: column;
   }
+  .action-button:focus {
+    background-color: #f9ba00;
+    transition: background-color .1s ease-in-out;
+  }
+  .action-button:hover {
+    background-color: #fcca1d;
+  }
 
+  .quiz-button:focus {
+    background-color: #fcca1d;
+    color: #fff;
+    transition: all .1s ease-in-out;
+  }
+
+  .quiz-button:hover {
+    background: none;
+    color: #333333;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -678,7 +695,7 @@ footer .container {
     max-width: 520px;
   }
 
-  #mail-subscription {
+  #mc-embedded-subscribe-form {
     width: calc(100% - 40px);
   }
 

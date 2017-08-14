@@ -587,9 +587,6 @@ class Mail extends Component {
         animationData: animationData
       })
   };
-  submitForm = () => {
-
-  }
 
   render() {
     return (
@@ -606,7 +603,7 @@ class Mail extends Component {
         </div>
         <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
           <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
-          <div id="mail-button" type="submit" name="subscribe" onClick={this.submitForm}>送出</div>
+          <input id="mail-button" type="submit" name="subscribe" value="送出" />
         </form>
         <div className="share-action">
           <div className="action-button" id="share-button">分享此遊戲</div>
