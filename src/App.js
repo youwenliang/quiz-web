@@ -5,10 +5,11 @@ import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
 
 /* --- Global Variable --- */
-var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1]);
+var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
 var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
+var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
 
 /* --- Strings --- */
 var strings = {
@@ -85,6 +86,7 @@ var strings = {
 };
 
 var quizzes = {
+  "q0": "你的性別是？",
   //X
   "q1": "我對設計有熱情？",
   "q2": "你是否對於設計冷感了？",
@@ -129,6 +131,7 @@ var quizzes = {
 };
 
 var answers = {
+  "q0": ["男", "女"],
   //X
   "q1": ["是", "否"],
   "q2": ["是", "否"],
@@ -182,10 +185,10 @@ class App extends Component {
   }
   handler = (s) => {
     var temp = this;
-    document.querySelector('body').classList.add('fade');
+    document.getElementById('root').classList.add('fade');
     setTimeout(function(){
       document.querySelector('body').scrollTop = 0;
-      document.querySelector('body').classList.remove('fade');
+      document.getElementById('root').classList.remove('fade');
       temp.setState({stage: s});
     }, 400);
   }
@@ -242,7 +245,7 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: "q1",
+      current: "q0",
       answers: []
     }
   }
@@ -255,6 +258,10 @@ class Quiz extends Component {
     var weight = 5;
 
     switch(a) {
+    case "q0":
+      if(b) gender = "男";
+      else gender = "女";
+      break;
     /*** X ***/
     case "q1":
       if(b) {
@@ -276,7 +283,7 @@ class Quiz extends Component {
         quizNum = "";
         quizWeight = 94;
         results = "雞排攤老闆";
-        window.location.hash = '#'+results;
+        window.location.hash = '#'+results+'-'+gender;
       } else quizTitle = "A";
       break;
     /*** A ***/
@@ -389,7 +396,7 @@ class Quiz extends Component {
       } else {
         this.props.handler("result");
       }
-      window.location.hash = '#'+results;
+      window.location.hash = '#'+results+'-'+gender;
       break;
     default:
       break;
@@ -406,12 +413,15 @@ class Quiz extends Component {
     $('#quiz-content').addClass('switch');
     $('#progress-circle').html((quizWeight-1)+'%');
 
-    var w = $(window).width() < 768 ? 300 : 700;
+    var w = $(window).width() < 768 ? 250 : 700;
     $('#progress-circle').css('left', w/100*(quizWeight-1) - 1 +'px');
     $('.progress-bar').css('width', w/100*(quizWeight-1)+'px');
 
     setTimeout(function(){
-      if(next === "done") $('.progress-bar').css('display','none');
+      if(next === "done") {
+        $('.progress-bar').css('display','none');
+        $('#loading').removeClass('fade');
+      }
       temp.setState({
         current: next,
         answers: currentAnswer
@@ -419,7 +429,6 @@ class Quiz extends Component {
     }, 200);
     setTimeout(function(){
       if(next !== "done") $('#quiz-content').removeClass('switch');
-      else $('#loading').removeClass('fade');
     }, 400);
     setTimeout(function(){
       if(next === "done") $('#loading').addClass('fade');
@@ -427,7 +436,7 @@ class Quiz extends Component {
   }
 
   updateDimensions() {
-    var w = $(window).width() < 768 ? 300 : 700;
+    var w = $(window).width() < 768 ? 250 : 700;
     $('#progress-circle').css('left', w/100*(quizWeight-1) - 1 +'px');
     $('.progress-bar').css('width', w/100*(quizWeight-1)+'px');
   }
@@ -499,7 +508,7 @@ class Result extends Component {
   };
 
   render() {
-    var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+"-header.svg"};
+    var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+gender+"-header.svg"};
     var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-icon1.svg"};
     var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-icon2.svg"};
     var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-icon3.svg"};

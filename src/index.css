@@ -11,13 +11,16 @@ body {
   font-family: 'Noto Sans CJKtc', sans-serif;
   color: #333333;
   line-height: 1.61;
-  opacity: 1;
-  transition: opacity 400ms ease-in-out;
   display: flex;
   overflow-x: hidden;
 }
 
-body.fade {
+#root {
+  opacity: 1;
+  transition: opacity 400ms ease-in-out;
+}
+
+#root.fade {
   opacity: 0;
   transition: opacity 400ms ease-in-out;
 }
@@ -36,6 +39,7 @@ body.fade {
   z-index: 1000;
   opacity: 1;
   pointer-events: none;
+  transition: opacity 400ms ease-in-out;
 }
 
 #loading.fade {
