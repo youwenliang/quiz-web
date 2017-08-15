@@ -296,6 +296,7 @@ class Quiz extends Component {
         next = "done";
         quizTitle = "";
         quizNum = "";
+        quizWeight = 94;
         results = "雞排攤老闆";
         window.location.hash = '#'+results;
       } else quizTitle = "A";
@@ -589,7 +590,7 @@ class Mail extends Component {
   };
 
   back() {
-    window.location.href = "/";
+    window.location.href = window.location.href.split('#')[0];
   }
 
   render() {
