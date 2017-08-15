@@ -217,29 +217,7 @@ class App extends Component {
 /* --- Main --- */
 class Main extends Component {
   componentDidMount = () => {
-    setTimeout(function(){
-      var animationData = require('./json/start/start.json');
-      var animation = bodymovin.loadAnimation({
-          container: document.getElementById('main-animation'),
-          renderer: 'svg',
-          loop: false,
-          autoplay: true,
-          animationData: animationData
-      });
-      animation.addEventListener("complete", function() {
-        animation.destroy();
-        if(document.getElementById('main-animation') !== null) {
-          var animationLoopData = require('./json/loop/loop.json');
-          var animationLoop = bodymovin.loadAnimation({
-              container: document.getElementById('main-animation'),
-              renderer: 'svg',
-              loop: true,
-              autoplay: true,
-              animationData: animationLoopData
-          });
-        }
-      });
-    },400);
+    
   };
 
   render() {
@@ -471,7 +449,7 @@ class Quiz extends Component {
 
   render() {
     var divStyle = {
-      backgroundImage: "url(images/quiz/"+this.state.current+".png"
+      backgroundImage: "url(images/quiz-images/"+this.state.current+".svg"
     }
     if (this.state.current === "q25") {
       return (
@@ -515,18 +493,23 @@ class Result extends Component {
   componentDidMount = () => {
     console.log("mount-result");
     setTimeout(function(){
+      $('.result-image').addClass('slide-in');
       $('.result-bar').addClass('grow');
     },100);
   };
 
   render() {
+    var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+"-header.svg"};
+    var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-icon1.svg"};
+    var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-icon2.svg"};
+    var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-icon3.svg"};
     return (
       <div className="result" id={results}>
         <div className="result-banner">
           <h3>你除了是設計師之外，更是一個......</h3>
         </div>
         <section id="result-header">
-          <div className="result-image">123</div>
+          <div className="result-image" style={divStyleHeader}></div>
           <div className="result-content">
             <h2>{results}</h2>
             <h3>{strings[results].title}</h3>
@@ -544,17 +527,17 @@ class Result extends Component {
           <h3>這樣的你，會需要知道什麼呢？</h3>
           <div className="result-icons-container">
             <div className="result-icons">
-              <div>123</div>
+              <div style={divStyleIcon1}></div>
               <h4>{strings[results].skill[0]}</h4>
               <p>{strings[results].content[0]}</p>
             </div>
             <div className="result-icons">
-              <div>123</div>
+              <div style={divStyleIcon2}></div>
               <h4>{strings[results].skill[1]}</h4>
               <p>{strings[results].content[1]}</p>
             </div>
             <div className="result-icons">
-              <div>123</div>
+              <div style={divStyleIcon3}></div>
               <h4>{strings[results].skill[2]}</h4>
               <p>{strings[results].content[2]}</p>
             </div>
