@@ -201,12 +201,12 @@ class App extends Component {
     if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
     if(this.state.stage === "quiz") quiz = <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
     if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
-    console.log(results);
     return (
       <div className="App">
         <Helmet>
           <meta property="og:title" content={"《不只是設計師》- "+title } />
           <meta name="description" content={results} />
+          <meta property="og:url" content={window.location.href}/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
         {main}
@@ -219,10 +219,6 @@ class App extends Component {
 
 /* --- Main --- */
 class Main extends Component {
-  componentDidMount = () => {
-    
-  };
-
   render() {
     console.log(this.props.stage);
     return (
@@ -249,6 +245,13 @@ class Quiz extends Component {
       answers: []
     }
   }
+
+  doneQuiz = () => {
+    quizTitle = "";
+    quizNum = "";
+    window.location.hash = '#'+results+'-'+gender;
+  }
+
   nextQuiz = (a, b) => {
     quizNum++;
     document.querySelector('body').scrollTop = 0;
@@ -278,12 +281,10 @@ class Quiz extends Component {
     case "q3":
       if(b) {
         this.props.handler("result");
-        next = "done";
-        quizTitle = "";
-        quizNum = "";
         quizWeight = 94;
         results = "雞排攤老闆";
-        window.location.hash = '#'+results+'-'+gender;
+        this.doneQuiz();
+        next = "done";
       } else quizTitle = "A";
       break;
     /*** A ***/
@@ -386,17 +387,14 @@ class Quiz extends Component {
       if(currentAnswer["q28"]) countI++;
       if(currentAnswer["q29"]) countI++;
       if(currentAnswer["q30"]) countI++;
-      console.log(countI);
-      next = "done";
-      quizTitle = "";
-      quizNum = "";
       if(countI === 5) {
         results = "設計控制狂";
         this.props.handler("result");
       } else {
         this.props.handler("result");
       }
-      window.location.hash = '#'+results+'-'+gender;
+      this.doneQuiz();
+      next = "done";
       break;
     default:
       break;
@@ -441,24 +439,18 @@ class Quiz extends Component {
     $('.progress-bar').css('width', w/100*(quizWeight-1)+'px');
   }
 
-  /**
-   * Add event listener
-   */
   componentDidMount() {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions.bind(this));
   }
 
-  /**
-   * Remove event listener
-   */
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
   render() {
     var divStyle = {
-      backgroundImage: "url(images/quiz-images/"+this.state.current+".svg"
+      backgroundImage: "url(images/quiz-images/"+this.state.current+".png"
     }
     if (this.state.current === "q25") {
       return (

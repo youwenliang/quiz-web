@@ -12,21 +12,6 @@ registerServiceWorker();
 
 $(document).ready(function(){
   $('body').scrollTop(0);
-  // var $div = $('#preload_area');
-  // var array = [];
-  // $.each($div.css('background-image').split(', '), function(key, value){
-  //   array.push(value.replace(/^url\(["']?/, '').replace(/["']?\)$/, ''));
-  // });
-  // var img = [];
-  // var count = 0;
-  // for (var i = 0; i < array.length; i++) {
-  //     $('<img/>').attr('src', array[i]).on('load', function() {
-  //       $(this).remove(); 
-  //       console.log(count);
-  //       count++;
-  //       if(count === array.length) $('#loading').addClass('fade');
-  //     });
-  // }
 });
 
 $(window).on('hashchange', function() {
@@ -34,11 +19,19 @@ $(window).on('hashchange', function() {
 });
 
 var images = [];
+
+//animation
 for (var i = 0; i < 43; i++) {
-  images[i] = 'images/img_'+i+'.png';
+  images.push('images/img_'+i+'.png');
 }
-// var images = $('img'); // it can also be a jQuery object
-// var images = document.querySelectorAll('img'); // or a NodeList
+
+//quiz
+for (var j = 1; j < 4; j++) {
+  images.push('images/quiz-images/q'+j+'.png');
+}
+
+//results
+
 
 loadImage(images)
 .then(function (allImgs) {
