@@ -5,11 +5,12 @@ import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
 
 /* --- Global Variable --- */
-var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
 var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
+var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
 var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
+var start = (results === "") ? "main" : "result";
 
 /* --- Strings --- */
 var strings = {
@@ -173,8 +174,6 @@ var answers = {
   "done": ["",""]
 };
 
-var start = (results === "") ? "main" : "result";
-
 /* --- App --- */
 class App extends Component {
   constructor(props) {
@@ -187,8 +186,8 @@ class App extends Component {
     var temp = this;
     document.getElementById('root').classList.add('fade');
     setTimeout(function(){
-      document.querySelector('body').scrollTop = 0;
       document.getElementById('root').classList.remove('fade');
+      document.querySelector('body').scrollTop = 0;
       temp.setState({stage: s});
     }, 400);
   }
@@ -452,39 +451,32 @@ class Quiz extends Component {
     var divStyle = {
       backgroundImage: "url(images/quiz-images/"+this.state.current+".png"
     }
+
+    let options = null;
     if (this.state.current === "q25") {
-      return (
-        <div className="quiz">
-          <div className="progress-bar"><div id="progress-circle">0%</div></div>
-          <div id="quiz-content">
-            <div className="quiz-image" style={divStyle}></div>
-            {/*<h2>{quizTitle}</h2>*/}
-            <p>{quizNum+". "+quizzes[this.state.current]}</p>
-            <div className="quiz-action three">
-              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
-              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
-              <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
-            </div>
-          </div>
-        </div>
-      );
+          options = <div className="quiz-action three">
+                      <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "a")}}>再試個十小時看看</div>
+                      <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "b")}}>去街上走走看看</div>
+                      <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
+                    </div>;
     }
     else {
-      return (
-        <div className="quiz">
-          <div className="progress-bar"><div id="progress-circle">0%</div></div>
-          <div id="quiz-content">
-            <div className="quiz-image" style={divStyle}></div>
-            {/*<h2>{quizTitle}</h2>*/}
-            <p>{quizNum+". "+quizzes[this.state.current]}</p>
-            <div className="quiz-action">
-              <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
-              <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>{answers[this.state.current][0]}</div>
-            </div>
-          </div>
-        </div>
-      );
+          options = <div className="quiz-action">
+                      <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
+                      <div className="quiz-button" id="quiz-yes" onClick={() => {this.nextQuiz(this.state.current, true)}}>{answers[this.state.current][0]}</div>
+                    </div>;        
     }
+    return (
+      <div className="quiz">
+        <div className="progress-bar"><div id="progress-circle">0%</div></div>
+        <div id="quiz-content">
+          <div className="quiz-image" style={divStyle}></div>
+          {/*<h2>{quizTitle}</h2>*/}
+          <p>{quizNum+". "+quizzes[this.state.current]}</p>
+          {options}
+        </div>
+      </div>
+    );
   }
 }
 
@@ -596,8 +588,7 @@ class Mail extends Component {
         </form>
         <div className="share-action">
           <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
-          <div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>
-分享結果</div>
+          <div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div>
         </div>
       </div>
     );
