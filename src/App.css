@@ -260,7 +260,7 @@ section {
 }
 
 .mail {
-  padding: 90px 0;
+  padding: 10px 0 90px;
 }
 
 #result-header {
@@ -441,8 +441,8 @@ section {
 #mail-image {
   width: 100%;
   max-width: 520px;
-  height: 270px;
-  background-color: rgba(0,0,0,.1);
+  height: 220px;
+  /*background-color: rgba(0,0,0,.1);*/
   display: block;
 }
 
@@ -453,7 +453,7 @@ section {
 }
 
 #mail-logo {
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 #mail-content h2 {
@@ -644,7 +644,7 @@ footer .container {
     height: 60vw;
   }
   #mail-image {
-    height: 50vw;
+    height: 40vw;
   }
   .progress-bar {
     width: 0px;

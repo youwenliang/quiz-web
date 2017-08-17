@@ -22,7 +22,11 @@ var images = [];
 
 //animation
 for (var i = 0; i < 43; i++) {
-  images.push('images/img_'+i+'.png');
+  images.push('images/home-images/img_'+i+'.png');
+}
+
+for (var i = 0; i < 18; i++) {
+  images.push('images/tone-images/img_'+i+'.png');
 }
 
 //quiz

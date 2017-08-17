@@ -280,7 +280,7 @@ class Quiz extends Component {
     case "q3":
       if(b) {
         this.props.handler("result");
-        quizWeight = 94;
+        quizWeight = 96;
         results = "雞排攤老闆";
         this.doneQuiz();
         next = "done";
