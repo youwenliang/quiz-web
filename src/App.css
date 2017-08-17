@@ -123,6 +123,10 @@ green-dark: ;
   animation: switch .4s ease-in-out;
 }
 
+.quiz-image.switch {
+  animation: switch .4s ease-in-out;
+}
+
 .switch .quiz-button {
   pointer-events: none;
 }
@@ -157,7 +161,7 @@ green-dark: ;
   width: 160px;
   height: 160px;
   display: block;
-  background-color: #fbfbfb;
+  /*background-color: #fbfbfb;*/
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

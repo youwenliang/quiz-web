@@ -30,8 +30,8 @@ for (var j = 0; j < 18; j++) {
 }
 
 //quiz
-for (var k = 1; k < 4; k++) {
-  images.push('images/quiz-images/q'+k+'.png');
+for (var k = 1; k < 12; k++) {
+  images.push('images/quiz-images/問卷問題icon-'+k+'.png');
 }
 
 //results

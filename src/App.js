@@ -8,6 +8,7 @@ import {Helmet} from 'react-helmet';
 var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
+var quizImg = "";
 var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
 var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
 var start = (results === "") ? "main" : "result";
@@ -92,37 +93,37 @@ var quizzes = {
   "q1": "我對設計有熱情？",
   "q2": "你是否對於設計冷感了？",
   "q3": "你的生命難道和設計再也無關了嗎？",
-  //A
+  //A-4
   "q4": "我設計出來的作品是不是具有個人風格非常重要",
   "q5": "在市場需求和作品原創性中，我認為必須以原創性作為優先考量",
   "q6": "若是作品能夠廣受大眾喜歡，在個人特色上妥協作品是可以接受的",
-  //B
+  //B-5
   "q7": "我覺得實務比理論來得重要許多",
   "q8": "開始動手做之前，我會找出所有的相關資料進行研究",
   "q9": "比起其他設計師，我認為自己是一個 Maker",
-  //C
+  //C-6
   "q10": "結合不同設計概念所產生的衝突感讓我覺得很有趣",
   "q11": "我自認是一個理性的人",
   "q12": "比起個人追求，我更想藉由設計力量改善社會問題",
-  //D
+  //D-7
   "q13": "社會設計對我來說是一個超讚的概念",
   "q14": "我有很在意的社會議題，並且曾經參與其中",
   "q15": "我一直或曾經試圖藉由設計幫助解決社會問題",
-  //E
+  //E-8
   "q16": "在工作團隊中，我經常擔任激勵他人的角色",
   "q17": "對於未來我有無限的企圖心",
   "q18": "我能夠說服一群人做一件很酷的事",
-  //F
+  //F-9
   "q19": "想像力就是我的超能力",
   "q20": "我其實偷偷覺得自己是怪咖",
   "q21": "人不瘋狂枉少年",
-  //G
+  //G-10
   "q22": "結合不同設計概念所產生的未知可能讓我覺得很有趣",
   "q23": "比起其他設計師，我認為自己是一個 Maker",
   "q24": "我的觀察力很強，連自己都會被自己嚇到",
-  //H
+  //H-11
   "q25": "沒靈感時，該怎麼辦？",
-  //I
+  //I-12
   "q26": "我很能忍受不明確的狀態",
   "q27": "我喜歡有條理地安排生活與工作",
   "q28": "面對計畫突然的變動，我會不自覺的感到不安或生氣",
@@ -263,19 +264,25 @@ class Quiz extends Component {
     case "q0":
       if(b) gender = "男";
       else gender = "女";
+      quizImg = "問卷問題icon-1";
+      $('.quiz-image').addClass('switch');
       break;
     /*** X ***/
     case "q1":
       if(b) {
         next = "q4";
         quizTitle = "A";
-      }
+        quizImg = "問卷問題icon-4";
+      } else quizImg = "問卷問題icon-2";
+      $('.quiz-image').addClass('switch');
       break;
     case "q2":
       if(!b) {
         next = "q4";
         quizTitle = "A";
-      }
+        quizImg = "問卷問題icon-4";
+      } else quizImg = "問卷問題icon-3";
+      $('.quiz-image').addClass('switch');
       break;
     case "q3":
       if(b) {
@@ -284,7 +291,11 @@ class Quiz extends Component {
         results = "雞排攤老闆";
         this.doneQuiz();
         next = "done";
-      } else quizTitle = "A";
+      } else {
+        quizTitle = "A";
+        quizImg = "問卷問題icon-4";
+      }
+      $('.quiz-image').addClass('switch');
       break;
     /*** A ***/
     case "q6":
@@ -295,9 +306,14 @@ class Quiz extends Component {
       if(countA >= 2) {
         next = "q25";
         quizTitle = "H";
+        quizImg = "問卷問題icon-11";
         weight = 0;
         quizWeight = 51;
-      } else quizTitle = "B";
+      } else {
+        quizTitle = "B";
+        quizImg = "問卷問題icon-5";
+      }
+      $('.quiz-image').addClass('switch');
       break;
     /*** B ***/
     case "q9":
@@ -308,8 +324,12 @@ class Quiz extends Component {
       if(countB < 2) {
         next = "q13";
         quizTitle = "D";
-      } else quizTitle = "C";
-
+        quizImg = "問卷問題icon-7";
+      } else {
+        quizTitle = "C";
+        quizImg = "問卷問題icon-6";
+      }
+      $('.quiz-image').addClass('switch');
       break;
     /*** C ***/
     case "q12":
@@ -317,11 +337,14 @@ class Quiz extends Component {
         next = "q26"
         results = "設計大善人";
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
       } else {
         next = "q26"
         results = "設計科學家";
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
       }
+      $('.quiz-image').addClass('switch');
       break;
     /*** D ***/
     case "q15":
@@ -332,43 +355,57 @@ class Quiz extends Component {
       if(countD > 2) {
         next = "q26";
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
         results = "設計大善人";
       } else {
         quizTitle = "E";
+        quizImg = "問卷問題icon-8";
         quizWeight = 61;
         weight = 2;
       }
+      $('.quiz-image').addClass('switch');
       break;
     /*** E ***/
     case "q18":
       if(!(currentAnswer["q17"] && currentAnswer["q18"])) {
         next = "q22";
         quizTitle = "G";
-      } else quizTitle = "F";
+        quizImg = "問卷問題icon-10";
+      } else {
+        quizTitle = "F";
+        quizImg = "問卷問題icon-9";
+      }
+      $('.quiz-image').addClass('switch');
       break;
     /*** F ***/
     case "q21":
       if(currentAnswer["q19"] && currentAnswer["q21"]) {
         next = "q26";
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
         results = "設計創業家";
       } else {
         next = "q26"
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
         results = "設計CEO";
       }
+      $('.quiz-image').addClass('switch');
       break;
     /*** G ***/
     case "q24":
       if(currentAnswer["q24"]) {
         next = "q26";
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
         results = "設計偵探";
       } else {
         next = "q26"
         quizTitle = "I";
+        quizImg = "問卷問題icon-12";
         results = "設計科學家";
       }
+      $('.quiz-image').addClass('switch');
       break;
     /*** H ***/
     case "q25":
@@ -377,6 +414,8 @@ class Quiz extends Component {
       else if(currentAnswer["q25"] === "c") results = "設計哲學家";
       next = "q26";
       quizTitle = "I";
+      quizImg = "問卷問題icon-12";
+      $('.quiz-image').addClass('switch');
       break;
     /*** I ***/
     case "q30":
@@ -392,8 +431,10 @@ class Quiz extends Component {
       } else {
         this.props.handler("result");
       }
+      $('.quiz-image').addClass('switch');
       this.doneQuiz();
       next = "done";
+      quizImg = "";
       break;
     default:
       break;
@@ -408,6 +449,7 @@ class Quiz extends Component {
     var temp = this;
 
     $('#quiz-content').addClass('switch');
+
     $('#progress-circle').html((quizWeight-1)+'%');
 
     var w = $(window).width() < 768 ? 250 : 700;
@@ -425,7 +467,10 @@ class Quiz extends Component {
       });
     }, 200);
     setTimeout(function(){
-      if(next !== "done") $('#quiz-content').removeClass('switch');
+      if(next !== "done") {
+        $('#quiz-content').removeClass('switch');
+        $('.quiz-image').removeClass('switch');
+      }
     }, 400);
     setTimeout(function(){
       if(next === "done") $('#loading').addClass('fade');
@@ -447,9 +492,9 @@ class Quiz extends Component {
     window.removeEventListener("resize", this.updateDimensions.bind(this));
   }
 
-  render() {
+  render() {    
     var divStyle = {
-      backgroundImage: "url(images/quiz-images/"+this.state.current+".png"
+      backgroundImage: "url(images/quiz-images/"+quizImg+".png"
     }
 
     let options = null;
@@ -460,6 +505,12 @@ class Quiz extends Component {
                       <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, "c")}}>思考為什麼我要做這個設計？</div>
                     </div>;
     }
+    else if (this.state.current === "q0"){
+          options = <div className="quiz-action">
+                      <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
+                      <div className="quiz-button" onClick={() => {this.nextQuiz(this.state.current, true)}}>{answers[this.state.current][0]}</div>
+                    </div>;        
+    }
     else {
           options = <div className="quiz-action">
                       <div className="quiz-button" id="quiz-no"  onClick={() => {this.nextQuiz(this.state.current, false)}}>{answers[this.state.current][1]}</div>
@@ -469,8 +520,8 @@ class Quiz extends Component {
     return (
       <div className="quiz">
         <div className="progress-bar"><div id="progress-circle">0%</div></div>
+        <div className="quiz-image" style={divStyle}></div>
         <div id="quiz-content">
-          <div className="quiz-image" style={divStyle}></div>
           {/*<h2>{quizTitle}</h2>*/}
           <p>{quizNum+". "+quizzes[this.state.current]}</p>
           {options}
