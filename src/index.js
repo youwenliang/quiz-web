@@ -25,13 +25,13 @@ for (var i = 0; i < 43; i++) {
   images.push('images/home-images/img_'+i+'.png');
 }
 
-for (var i = 0; i < 18; i++) {
-  images.push('images/tone-images/img_'+i+'.png');
+for (var j = 0; j < 18; j++) {
+  images.push('images/tone-images/img_'+j+'.png');
 }
 
 //quiz
-for (var j = 1; j < 4; j++) {
-  images.push('images/quiz-images/q'+j+'.png');
+for (var k = 1; k < 4; k++) {
+  images.push('images/quiz-images/q'+k+'.png');
 }
 
 //results

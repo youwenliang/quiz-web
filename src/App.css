@@ -29,6 +29,11 @@ green-dark: ;
   height: 360px;
   margin-top: 40px;
   background-color: #78C9D7;
+  overflow: hidden;
+}
+
+#main-animation {
+  transform: scale(1.2);
 }
 
 #main-animation,
@@ -203,6 +208,24 @@ green-dark: ;
   background-color: #fcca1d;
   color: #fff;
   transition: all .1s ease-in-out;
+}
+
+#quiz-yes {
+  border: 3px #b2d12c solid;
+}
+
+#quiz-yes:hover,
+#quiz-yes:active {
+  background-color: #b2d12c;
+}
+
+#quiz-no {
+  border: 3px #f0895d solid;
+}
+
+#quiz-no:hover,
+#quiz-no:active {
+  background-color: #f0895d;
 }
 
 .progress-bar {
