@@ -165,7 +165,7 @@ green-dark: ;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  border-radius: 100%;
+  /*border-radius: 100%;*/
   margin: auto;
   margin-bottom: 30px;
 }
@@ -376,6 +376,7 @@ section {
   margin: auto;
   background-position: center 100%;
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .result-icons p {

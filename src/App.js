@@ -11,74 +11,73 @@ var quizWeight = 1;
 var quizImg = "";
 var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
 var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
-var start = (results === "") ? "main" : "result";
 
 /* --- Strings --- */
 var strings = {
-  "設計創業家": {
+  "外星人": {
     "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
     "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
     "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計控制狂": {
+  "控制狂": {
     "title": "交給你了，我有好好記下來了喲（燦笑）",
     "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
     "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計CEO": {
+  "CEO": {
     "title": "我說要有光，就有了光。",
     "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
     "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計偵探": {
+  "偵探": {
     "title": "真相，永遠只有一個！",
     "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
     "skill": ["換位思考", "讀心術", "海龜湯高手"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計科學家": {
+  "科學家": {
     "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
     "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
     "skill": ["動手做做看", "異元素組合力", "科學精神"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計大善人": {
+  "大善人": {
     "title": "這世界有太多比錢更重要的事了",
     "talent": ["善良-full", "天真-mid", "小幸運-high"],
     "skill": ["同理他者", "熱心公益", "召喚世界和平"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計哲學家": {
+  "哲學家": {
     "title": "少即是多，色即是空。",
     "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
     "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計探險家": {
+  "鍊金術師": {
     "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
     "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
     "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "設計說書人": {
+  "說書人": {
     "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
     "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
     "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
-  "雞排攤老闆": {
+  "雞排店長": {
     "title": "做什麼設計，現在加盟雞排店還來得及唷～",
     "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
     "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
@@ -86,6 +85,8 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   }
 };
+
+var start = (strings[results] === null) ? "main" : "result";
 
 var quizzes = {
   "q0": "你的性別是？",
@@ -288,7 +289,7 @@ class Quiz extends Component {
       if(b) {
         this.props.handler("result");
         quizWeight = 96;
-        results = "雞排攤老闆";
+        results = "雞排店長";
         this.doneQuiz();
         next = "done";
       } else {
@@ -335,12 +336,12 @@ class Quiz extends Component {
     case "q12":
       if(currentAnswer["q12"]) {
         next = "q26"
-        results = "設計大善人";
+        results = "大善人";
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
       } else {
         next = "q26"
-        results = "設計科學家";
+        results = "科學家";
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
       }
@@ -356,7 +357,7 @@ class Quiz extends Component {
         next = "q26";
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
-        results = "設計大善人";
+        results = "大善人";
       } else {
         quizTitle = "E";
         quizImg = "問卷問題icon-8";
@@ -383,12 +384,12 @@ class Quiz extends Component {
         next = "q26";
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
-        results = "設計創業家";
+        results = "外星人";
       } else {
         next = "q26"
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
-        results = "設計CEO";
+        results = "CEO";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -398,20 +399,20 @@ class Quiz extends Component {
         next = "q26";
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
-        results = "設計偵探";
+        results = "偵探";
       } else {
         next = "q26"
         quizTitle = "I";
         quizImg = "問卷問題icon-12";
-        results = "設計科學家";
+        results = "科學家";
       }
       $('.quiz-image').addClass('switch');
       break;
     /*** H ***/
     case "q25":
-      if(currentAnswer["q25"] === "a") results = "設計探險家";
-      else if(currentAnswer["q25"] === "b") results = "設計說書人";
-      else if(currentAnswer["q25"] === "c") results = "設計哲學家";
+      if(currentAnswer["q25"] === "a") results = "鍊金術師";
+      else if(currentAnswer["q25"] === "b") results = "說書人";
+      else if(currentAnswer["q25"] === "c") results = "哲學家";
       next = "q26";
       quizTitle = "I";
       quizImg = "問卷問題icon-12";
@@ -426,7 +427,7 @@ class Quiz extends Component {
       if(currentAnswer["q29"]) countI++;
       if(currentAnswer["q30"]) countI++;
       if(countI === 5) {
-        results = "設計控制狂";
+        results = "控制狂";
         this.props.handler("result");
       } else {
         this.props.handler("result");
@@ -544,9 +545,9 @@ class Result extends Component {
 
   render() {
     var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+gender+"-header.svg"};
-    var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-icon1.svg"};
-    var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-icon2.svg"};
-    var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-icon3.svg"};
+    var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-1.png"};
+    var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-2.png"};
+    var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-3.png"};
     return (
       <div className="result" id={results}>
         <div className="result-banner">
@@ -630,7 +631,7 @@ class Mail extends Component {
           <div id="mail-content">
             <div className="logo" id="mail-logo">Tone</div>
             <h2>給設計師的溝通研習所</h2>
-            <p>留下你的mail，我們將會寄送更多與設計科學家相關的資訊給你，讓你的更有效率的學習，成為不只是設計師的設計師！</p>
+            <p>留下你的mail，我們將會寄送更多與科學家相關的資訊給你，讓你的更有效率的學習，成為不只是設計師的設計師！</p>
           </div>  
         </div>
         <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
