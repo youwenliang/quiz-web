@@ -3,14 +3,20 @@ import './App.css';
 import $ from 'jquery';
 import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
+import { Route, Link, Redirect } from "react-router-dom";
+
+import ShareResults_1 from "./results/results_1.js";
+import ShareResults_2 from "./results/results_2.js";
+import ShareResults_3 from "./results/results_3.js";
+import ShareResults_4 from "./results/results_4.js";
 
 /* --- Global Variable --- */
 var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
 var quizImg = "";
-var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
-var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
+var results = ""//(window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
+var gender = ""//(window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
 
 /* --- Strings --- */
 var strings = {
@@ -86,7 +92,7 @@ var strings = {
   }
 };
 
-var start = (!strings[results]) ? "main" : "result";
+var start = "main"; //(!strings[results]) ? "main" : "result";
 
 var quizzes = {
   "q0": "你的性別是？",
@@ -187,6 +193,7 @@ class App extends Component {
   handler = (s) => {
     var temp = this;
     document.getElementById('root').classList.add('fade');
+    window.location.hash = s;
     setTimeout(function(){
       document.getElementById('root').classList.remove('fade');
       document.querySelector('body').scrollTop = 0;
@@ -210,6 +217,11 @@ class App extends Component {
           <meta property="og:url" content={window.location.href}/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
+        <Route exact path="/results/1" component={ShareResults_1}/>
+        <Route exact path="/results/2" component={ShareResults_2}/>
+        <Route exact path="/results/3" component={ShareResults_3}/>
+        <Route exact path="/results/4" component={ShareResults_4}/>
+        <Redirect from='*' to='/' />
         {main}
         {quiz}
         {result}
@@ -250,7 +262,7 @@ class Quiz extends Component {
   doneQuiz = () => {
     quizTitle = "";
     quizNum = "";
-    window.location.hash = '#'+results+'-'+gender;
+    // window.location.hash = '#'+results+'-'+gender;
   }
 
   nextQuiz = (a, b) => {

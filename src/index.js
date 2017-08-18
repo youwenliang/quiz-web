@@ -2,13 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { BrowserRouter } from "react-router-dom";
 import registerServiceWorker from './registerServiceWorker';
 import $ from 'jquery';
 import loadImage from 'image-promise';
 import bodymovin from 'bodymovin';
+import { Route, Link, Redirect } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+ <BrowserRouter>
+   <App />
+ </BrowserRouter>,
+ document.getElementById("root")
+);
 registerServiceWorker();
+
+if(window.location.hash !== "") window.location.href = window.location.href.split('#')[0];
 
 $(document).ready(function(){
   $('body').scrollTop(0);
