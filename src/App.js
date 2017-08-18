@@ -86,7 +86,7 @@ var strings = {
   }
 };
 
-var start = (strings[results] === null) ? "main" : "result";
+var start = (!strings[results]) ? "main" : "result";
 
 var quizzes = {
   "q0": "你的性別是？",

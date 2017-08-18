@@ -472,6 +472,24 @@ section {
   height: 220px;
   /*background-color: rgba(0,0,0,.1);*/
   display: block;
+  position: relative;
+}
+
+#mail-image:after {
+  content: '';
+  width: 120px;
+  height: 30px;
+  background-image:url(images/wave.gif);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center 10px;
+  display: block;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: translateX(-10px);
 }
 
 #mail-content {
@@ -664,6 +682,12 @@ footer .container {
   .share-action {
     width: 100%;
     flex-direction: column;
+  }
+  #mail-image:after {
+    width: 25%;
+    height: 20px;
+    transform: translateX(-5px);
+    background-position: center 5px;
   }
 }
 

@@ -24,18 +24,17 @@ var images = [];
 for (var i = 0; i < 43; i++) {
   images.push('images/home-images/img_'+i+'.png');
 }
-
 for (var j = 0; j < 18; j++) {
   images.push('images/tone-images/img_'+j+'.png');
 }
-
 //quiz
 for (var k = 1; k < 12; k++) {
   images.push('images/quiz-images/問卷問題icon-'+k+'.png');
 }
-
 //results
-
+for (var l = 0; l < 72; l++) {
+  $('#preload').append('<img src="'+images[l]+'"></div>');
+}
 
 loadImage(images)
 .then(function (allImgs) {

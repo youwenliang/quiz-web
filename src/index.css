@@ -25,6 +25,13 @@ body {
   transition: opacity 400ms ease-in-out;
 }
 
+#preload {
+  width: 0px;
+  height: 0px;
+  opacity: 0;
+  overflow: hidden;
+}
+
 #loading {
   width: 100%;
   height: 100vh;
