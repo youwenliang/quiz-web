@@ -217,11 +217,7 @@ class App extends Component {
           <meta property="og:url" content={window.location.href}/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
-        <Route exact path="/results/1" component={ShareResults_1}/>
-        <Route exact path="/results/2" component={ShareResults_2}/>
-        <Route exact path="/results/3" component={ShareResults_3}/>
-        <Route exact path="/results/4" component={ShareResults_4}/>
-        <Redirect from='*' to='/' />
+        <Redirect from='*' to='/quiz-web' />
         {main}
         {quiz}
         {result}
