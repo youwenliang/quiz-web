@@ -12,11 +12,13 @@ green-dark: ;
   /*padding: 60px 0;*/
   display: flex;
   /*align-items: center;*/
+  overflow-x: hidden;
 }
 
 .App {
   text-align: center;
   width: 100%;
+  overflow-x: hidden;
 }
 
 .hidden {
@@ -29,6 +31,22 @@ green-dark: ;
   height: 360px;
   margin-top: 40px;
   background-color: #78C9D7;
+  overflow: hidden;
+  position: relative;
+}
+
+#main-header:after{
+  content: '';
+  width: 1440px;
+  height: 360px;
+  display: block;
+  background-image: url(images/bgIcon-1.png), url(images/bgIcon-2.png), url(images/bgIcon-3.png),url(images/bgIcon-4.png);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 160px, 160px, 160px, 160px;
+  background-position: 10% center, 25% center, 75% center, 90% center;
+  position: absolute;
+  left: calc(50vw - 720px);
+  top: 40px;
   overflow: hidden;
 }
 
@@ -47,7 +65,7 @@ green-dark: ;
 #main-content {
   max-width: 1140px;
   height: 100%;
-  padding: 30px 20px 40px;
+  padding: 10px 20px 40px;
   box-sizing: border-box;
   text-align: center;
   margin: 0 auto;
@@ -60,6 +78,7 @@ green-dark: ;
   display: inline-block;
   position: relative;
   margin-bottom: 10px;
+  white-space: nowrap;
 }
 
 /*#main-content h1::after {
@@ -689,12 +708,17 @@ footer .container {
     transform: translateX(-5px);
     background-position: center 5px;
   }
+  #main-header {
+    margin-top: 0px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  #main-header {
+  #main-header,
+  #main-header:after {
     height: 60vw;
   }
+
   #mail-image {
     height: 40vw;
   }
