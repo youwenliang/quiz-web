@@ -5,11 +5,6 @@ import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
 import { Route, Link, Redirect } from "react-router-dom";
 
-import ShareResults_1 from "./results/results_1.js";
-import ShareResults_2 from "./results/results_2.js";
-import ShareResults_3 from "./results/results_3.js";
-import ShareResults_4 from "./results/results_4.js";
-
 /* --- Global Variable --- */
 var quizTitle = "初始題";
 var quizNum = 1;
@@ -21,6 +16,7 @@ var gender = ""//(window.location.hash === "") ? "" : decodeURIComponent((window
 /* --- Strings --- */
 var strings = {
   "外星人": {
+    "id": "1",
     "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
     "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
     "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
@@ -28,6 +24,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "控制狂": {
+    "id": "2",
     "title": "交給你了，我有好好記下來了喲（燦笑）",
     "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
     "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
@@ -35,6 +32,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "CEO": {
+    "id": "3",
     "title": "我說要有光，就有了光。",
     "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
     "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
@@ -42,6 +40,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "偵探": {
+    "id": "4",
     "title": "真相，永遠只有一個！",
     "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
     "skill": ["換位思考", "讀心術", "海龜湯高手"],
@@ -49,6 +48,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "科學家": {
+    "id": "5",
     "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
     "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
     "skill": ["動手做做看", "異元素組合力", "科學精神"],
@@ -56,6 +56,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "大善人": {
+    "id": "6",
     "title": "這世界有太多比錢更重要的事了",
     "talent": ["善良-full", "天真-mid", "小幸運-high"],
     "skill": ["同理他者", "熱心公益", "召喚世界和平"],
@@ -63,6 +64,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "哲學家": {
+    "id": "7",
     "title": "少即是多，色即是空。",
     "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
     "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
@@ -70,6 +72,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "鍊金術師": {
+    "id": "8",
     "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
     "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
     "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
@@ -77,6 +80,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "說書人": {
+    "id": "9",
     "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
     "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
     "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
@@ -84,6 +88,7 @@ var strings = {
     "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
   },
   "雞排店長": {
+    "id": "10",
     "title": "做什麼設計，現在加盟雞排店還來得及唷～",
     "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
     "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
@@ -217,7 +222,7 @@ class App extends Component {
           <meta property="og:url" content={window.location.href}/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
-        <Redirect from='*' to='/quiz-web' />
+        <Redirect from='*' to='/' />
         {main}
         {quiz}
         {result}
@@ -630,6 +635,7 @@ class Mail extends Component {
   }
 
   render() {
+    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/quiz-web/results/"+strings[results].id+"&redirect_uri=https://www.facebook.com/";
     return (
       <div className="mail">
         <div className="container" id="mail-container">
@@ -648,7 +654,7 @@ class Mail extends Component {
         </form>
         <div className="share-action">
           <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
-          <div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div>
+          <a href={url}><div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div></a>
         </div>
       </div>
     );

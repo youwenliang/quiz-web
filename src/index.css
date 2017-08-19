@@ -15,6 +15,15 @@ body {
   overflow-x: hidden;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
 #root {
   opacity: 1;
   transition: opacity 400ms ease-in-out;
