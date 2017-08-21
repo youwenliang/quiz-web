@@ -7,10 +7,9 @@ import registerServiceWorker from './registerServiceWorker';
 import $ from 'jquery';
 import loadImage from 'image-promise';
 import bodymovin from 'bodymovin';
-import { Route, Link, Redirect } from "react-router-dom";
 
 ReactDOM.render(
- <BrowserRouter>
+ <BrowserRouter basename="quiz-web">
    <App />
  </BrowserRouter>,
  document.getElementById("root")
@@ -21,6 +20,7 @@ if(window.location.hash !== "") window.location.href = window.location.href.spli
 
 $(document).ready(function(){
   $('body').scrollTop(0);
+  if(isFacebookApp()) $('body').css('font-size', '8px');
 });
 
 $(window).on('hashchange', function() {
@@ -38,11 +38,31 @@ for (var j = 0; j < 18; j++) {
 }
 //quiz
 for (var k = 1; k < 12; k++) {
-  images.push('images/quiz-images/問卷問題icon-'+k+'.png');
+  images.push('images/quiz-images/Quiz-icon-'+k+'.png');
 }
 //results
 for (var l = 0; l < 72; l++) {
   $('#preload').append('<img src="'+images[l]+'"></div>');
+}
+
+for (var x = 1; x <= 10; x ++) {
+  images.push('images/result-images/Results-'+x+'m.png');
+  images.push('images/result-images/Results-'+x+'f.png'); 
+}
+
+for (var y = 1; y <= 10; y ++) {
+  for (var z = 1; z <= 3; z++) {
+    images.push('images/result-images/Icons-'+y+'-'+z+'.png');
+  }
+}
+
+function isFacebookApp() {
+  var ua = navigator.userAgent || navigator.vendor || window.opera;
+  return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
+}
+
+if (window.MobileAccessibility && isFacebookApp()) {
+  window.MobileAccessibility.usePreferredTextZoom(false);
 }
 
 loadImage(images)
@@ -52,6 +72,7 @@ loadImage(images)
 
   if(document.getElementById('main-animation') !== null) {
     setTimeout(function(){
+      $('#main-header').addClass('done');
       var animationData = require('./json/start/start.json');
       var animation = bodymovin.loadAnimation({
           container: document.getElementById('main-animation'),

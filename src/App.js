@@ -3,7 +3,7 @@ import './App.css';
 import $ from 'jquery';
 import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
-import { Route, Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 /* --- Global Variable --- */
 var quizTitle = "初始題";
@@ -21,7 +21,8 @@ var strings = {
     "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
     "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "控制狂": {
     "id": "2",
@@ -29,7 +30,8 @@ var strings = {
     "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
     "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "CEO": {
     "id": "3",
@@ -37,7 +39,8 @@ var strings = {
     "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
     "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "two"
   },
   "偵探": {
     "id": "4",
@@ -45,7 +48,8 @@ var strings = {
     "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
     "skill": ["換位思考", "讀心術", "海龜湯高手"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "two"
   },
   "科學家": {
     "id": "5",
@@ -53,7 +57,8 @@ var strings = {
     "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
     "skill": ["動手做做看", "異元素組合力", "科學精神"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "大善人": {
     "id": "6",
@@ -61,7 +66,8 @@ var strings = {
     "talent": ["善良-full", "天真-mid", "小幸運-high"],
     "skill": ["同理他者", "熱心公益", "召喚世界和平"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "哲學家": {
     "id": "7",
@@ -69,7 +75,8 @@ var strings = {
     "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
     "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "鍊金術師": {
     "id": "8",
@@ -77,7 +84,8 @@ var strings = {
     "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
     "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": ""
   },
   "說書人": {
     "id": "9",
@@ -85,7 +93,8 @@ var strings = {
     "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
     "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": "three"
   },
   "雞排店長": {
     "id": "10",
@@ -93,7 +102,8 @@ var strings = {
     "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
     "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！",
+    "length": ""
   }
 };
 
@@ -234,7 +244,7 @@ class App extends Component {
 /* --- Main --- */
 class Main extends Component {
   render() {
-    console.log(this.props.stage);
+    // console.log(this.props.stage);
     return (
       <div className="main">
         <div id="main-header">
@@ -276,9 +286,9 @@ class Quiz extends Component {
 
     switch(a) {
     case "q0":
-      if(b) gender = "男";
-      else gender = "女";
-      quizImg = "問卷問題icon-1";
+      if(b) gender = "m";
+      else gender = "f";
+      quizImg = "Quiz-icon-1";
       $('.quiz-image').addClass('switch');
       break;
     /*** X ***/
@@ -286,16 +296,16 @@ class Quiz extends Component {
       if(b) {
         next = "q4";
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
-      } else quizImg = "問卷問題icon-2";
+        quizImg = "Quiz-icon-4";
+      } else quizImg = "Quiz-icon-2";
       $('.quiz-image').addClass('switch');
       break;
     case "q2":
       if(!b) {
         next = "q4";
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
-      } else quizImg = "問卷問題icon-3";
+        quizImg = "Quiz-icon-4";
+      } else quizImg = "Quiz-icon-3";
       $('.quiz-image').addClass('switch');
       break;
     case "q3":
@@ -307,7 +317,7 @@ class Quiz extends Component {
         next = "done";
       } else {
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
+        quizImg = "Quiz-icon-4";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -320,12 +330,12 @@ class Quiz extends Component {
       if(countA >= 2) {
         next = "q25";
         quizTitle = "H";
-        quizImg = "問卷問題icon-11";
+        quizImg = "Quiz-icon-11";
         weight = 0;
         quizWeight = 51;
       } else {
         quizTitle = "B";
-        quizImg = "問卷問題icon-5";
+        quizImg = "Quiz-icon-5";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -338,10 +348,10 @@ class Quiz extends Component {
       if(countB < 2) {
         next = "q13";
         quizTitle = "D";
-        quizImg = "問卷問題icon-7";
+        quizImg = "Quiz-icon-7";
       } else {
         quizTitle = "C";
-        quizImg = "問卷問題icon-6";
+        quizImg = "Quiz-icon-6";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -351,12 +361,12 @@ class Quiz extends Component {
         next = "q26"
         results = "大善人";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
       } else {
         next = "q26"
         results = "科學家";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -369,11 +379,11 @@ class Quiz extends Component {
       if(countD > 2) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "大善人";
       } else {
         quizTitle = "E";
-        quizImg = "問卷問題icon-8";
+        quizImg = "Quiz-icon-8";
         quizWeight = 61;
         weight = 2;
       }
@@ -384,10 +394,10 @@ class Quiz extends Component {
       if(!(currentAnswer["q17"] && currentAnswer["q18"])) {
         next = "q22";
         quizTitle = "G";
-        quizImg = "問卷問題icon-10";
+        quizImg = "Quiz-icon-10";
       } else {
         quizTitle = "F";
-        quizImg = "問卷問題icon-9";
+        quizImg = "Quiz-icon-9";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -396,12 +406,12 @@ class Quiz extends Component {
       if(currentAnswer["q19"] && currentAnswer["q21"]) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "外星人";
       } else {
         next = "q26"
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "CEO";
       }
       $('.quiz-image').addClass('switch');
@@ -411,12 +421,12 @@ class Quiz extends Component {
       if(currentAnswer["q24"]) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "偵探";
       } else {
         next = "q26"
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "科學家";
       }
       $('.quiz-image').addClass('switch');
@@ -428,7 +438,7 @@ class Quiz extends Component {
       else if(currentAnswer["q25"] === "c") results = "哲學家";
       next = "q26";
       quizTitle = "I";
-      quizImg = "問卷問題icon-12";
+      quizImg = "Quiz-icon-12";
       $('.quiz-image').addClass('switch');
       break;
     /*** I ***/
@@ -448,7 +458,6 @@ class Quiz extends Component {
       $('.quiz-image').addClass('switch');
       this.doneQuiz();
       next = "done";
-      quizImg = "";
       break;
     default:
       break;
@@ -508,7 +517,7 @@ class Quiz extends Component {
 
   render() {    
     var divStyle = {
-      backgroundImage: "url(images/quiz-images/"+quizImg+".png"
+      backgroundImage: "url(images/quiz-images/"+quizImg+".png)"
     }
 
     let options = null;
@@ -549,7 +558,7 @@ class Quiz extends Component {
 class Result extends Component {
 
   componentDidMount = () => {
-    console.log("mount-result");
+    // console.log("mount-result");
     setTimeout(function(){
       $('.result-image').addClass('slide-in');
       $('.result-bar').addClass('grow');
@@ -557,10 +566,10 @@ class Result extends Component {
   };
 
   render() {
-    var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+gender+"-header.svg"};
-    var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-1.png"};
-    var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-2.png"};
-    var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-3.png"};
+    var divStyleHeader = {backgroundImage: "url(images/result-images/Results-"+strings[results].id+gender+".png)"};
+    var divStyleIcon1 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-1.png)"};
+    var divStyleIcon2 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-2.png)"};
+    var divStyleIcon3 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-3.png)"};
     return (
       <div className="result" id={results}>
         <div className="result-banner">
@@ -568,8 +577,8 @@ class Result extends Component {
         </div>
         <section id="result-header">
           <div className="result-image" style={divStyleHeader}></div>
-          <div className="result-content">
-            <h2>{results}</h2>
+          <div className={"result-content " + strings[results].length}>
+            <div id="result-bg"><h2>{results}</h2></div>
             <h3>{strings[results].title}</h3>
             <div className="result-bar-container">
               <h6>{strings[results].talent[0].split('-')[0]}</h6>

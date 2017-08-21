@@ -9,10 +9,12 @@ body {
   min-height: 100%;
   position: relative;
   font-family: 'Noto Sans CJKtc', sans-serif;
-  color: #333333;
+  color: rgb(86,84,83);
   line-height: 1.61;
   display: flex;
+  letter-spacing: .5px;
   overflow-x: hidden;
+  font-size: 12px;
 }
 
 a {
@@ -65,21 +67,21 @@ a:active {
 }
 
 h2 {
-  font-size: 30px;
+  font-size: 2.5em;
 }
 
 h3 {
-  font-size: 24px;
+  font-size: 2em;
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 1.67em;
   margin-bottom: 6px;
 }
 
 h6,
 p {
-  font-size: 16px;
+  font-size: 1.33em;
 }
 
 h6 {
