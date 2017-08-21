@@ -9,7 +9,7 @@ import loadImage from 'image-promise';
 import bodymovin from 'bodymovin';
 
 ReactDOM.render(
- <BrowserRouter basename="quiz-web">
+ <BrowserRouter>
    <App />
  </BrowserRouter>,
  document.getElementById("root")
@@ -20,7 +20,7 @@ if(window.location.hash !== "") window.location.href = window.location.href.spli
 
 $(document).ready(function(){
   $('body').scrollTop(0);
-  if(isFacebookApp()) $('body').css('font-size', '8px');
+  if(isFacebookApp() && $('#main-content h1').height() > 60) $('body').css('font-size', '8px');
 });
 
 $(window).on('hashchange', function() {
@@ -59,10 +59,6 @@ for (var y = 1; y <= 10; y ++) {
 function isFacebookApp() {
   var ua = navigator.userAgent || navigator.vendor || window.opera;
   return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
-}
-
-if (window.MobileAccessibility && isFacebookApp()) {
-  window.MobileAccessibility.usePreferredTextZoom(false);
 }
 
 loadImage(images)
