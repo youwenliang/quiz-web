@@ -270,12 +270,6 @@ class Quiz extends Component {
     }
   }
 
-  doneQuiz = () => {
-    quizTitle = "";
-    quizNum = "";
-    // window.location.hash = '#'+results+'-'+gender;
-  }
-
   nextQuiz = (a, b) => {
     quizNum++;
     document.querySelector('body').scrollTop = 0;
@@ -313,8 +307,8 @@ class Quiz extends Component {
         this.props.handler("result");
         quizWeight = 96;
         results = "雞排店長";
-        this.doneQuiz();
         next = "done";
+        quizNum--;
       } else {
         quizTitle = "A";
         quizImg = "Quiz-icon-4";
@@ -456,8 +450,8 @@ class Quiz extends Component {
         this.props.handler("result");
       }
       $('.quiz-image').addClass('switch');
-      this.doneQuiz();
       next = "done";
+      quizNum--;
       break;
     default:
       break;
