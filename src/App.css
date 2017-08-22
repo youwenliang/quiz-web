@@ -306,7 +306,46 @@ section {
 
 .result {
   padding-bottom: 180px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0px;
+  transition: all .4s ease-in-out;
+}
+
+.result.move {
+  margin-top: 180px;
+  transition: all .4s ease-in-out;
+}
+
+#scroll-down {
+  width: 100%;
+  height: 180px;
+  position: fixed;
+  padding: 0px 20px 40px;
+  background-color: #fff;
+  box-shadow: rgba(12,12,13,.2) 0px 2px 4px;
+  z-index: 9999;
+  top: 0px;
+  transform: translateY(0);
+  box-sizing: border-box;
+  transition: all .4s ease-in-out;
+}
+
+#scroll-down.hide {
+  box-shadow: rgba(12,12,13,0) 0px 2px 4px;
+  transform: translateY(-180px);
+  transition: all .4s ease-in-out;
+}
+
+#close {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-color: #ccc;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
 }
 
 .mail {

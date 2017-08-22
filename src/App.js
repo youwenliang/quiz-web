@@ -4,6 +4,7 @@ import $ from 'jquery';
 import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
 import { Redirect } from "react-router-dom";
+import loadImage from 'image-promise';
 
 /* --- Global Variable --- */
 var quizTitle = "初始題";
@@ -209,11 +210,43 @@ class App extends Component {
     var temp = this;
     document.getElementById('root').classList.add('fade');
     window.location.hash = s;
-    setTimeout(function(){
-      document.getElementById('root').classList.remove('fade');
-      document.querySelector('body').scrollTop = 0;
-      temp.setState({stage: s});
-    }, 400);
+    if(s === "result") {
+      var resultImages = [];
+      console.log(results);
+      resultImages.push('images/result-images/Results-'+strings[results].id+gender+'.png');
+      for (var z = 1; z <= 3; z++) {
+        resultImages.push('images/result-images/Icons-'+strings[results].id+'-'+z+'.png');
+      }
+      loadImage(resultImages)
+      .then(function (allImgs) {
+        console.log(allImgs.length, 'images loaded!', allImgs);
+        setTimeout(function(){
+          document.getElementById('root').classList.remove('fade');
+          document.querySelector('body').scrollTop = 0;
+          temp.setState({stage: s});
+        }, 400);
+        setTimeout(function(){
+          $('#loading').addClass('fade');
+          setTimeout(function(){
+            $('#scroll-down').removeClass('hide');
+            $('.result').addClass('move');
+          }, 3000);
+        }, 1200);
+      })
+      .catch(function (err) {
+        console.error('One or more images have failed to load :(');
+        console.error(err.errored);
+        console.info('But these loaded fine:');
+        console.info(err.loaded);
+      });
+
+    } else {
+      setTimeout(function(){
+        document.getElementById('root').classList.remove('fade');
+        document.querySelector('body').scrollTop = 0;
+        temp.setState({stage: s});
+      }, 400);
+    }
   }
 
   render() {
@@ -304,11 +337,11 @@ class Quiz extends Component {
       break;
     case "q3":
       if(b) {
-        this.props.handler("result");
-        quizWeight = 96;
         results = "雞排店長";
+        quizWeight = 96;
         next = "done";
         quizNum--;
+        this.props.handler("result");
       } else {
         quizTitle = "A";
         quizImg = "Quiz-icon-4";
@@ -489,9 +522,6 @@ class Quiz extends Component {
         $('.quiz-image').removeClass('switch');
       }
     }, 400);
-    setTimeout(function(){
-      if(next === "done") $('#loading').addClass('fade');
-    }, 1200);
   }
 
   updateDimensions() {
@@ -559,6 +589,19 @@ class Result extends Component {
     },100);
   };
 
+  scrollto = () => {
+    $('html, body').animate({
+        scrollTop: $(".mail").offset().top - 180
+    }, 400);
+    $('#scroll-down').addClass('hide');
+    $('.result').removeClass('move');
+  }
+
+  close = () => {
+    $('#scroll-down').addClass('hide');
+    $('.result').removeClass('move');
+  }
+
   render() {
     var divStyleHeader = {backgroundImage: "url(images/result-images/Results-"+strings[results].id+gender+".png)"};
     var divStyleIcon1 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-1.png)"};
@@ -566,6 +609,11 @@ class Result extends Component {
     var divStyleIcon3 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-3.png)"};
     return (
       <div className="result" id={results}>
+        <div id="scroll-down" className="hide">
+          <div id="close" onClick={this.close}>X</div>
+          <h2>Words</h2>
+          <div className="action-button" onClick={this.scrollto}>開始測驗吧</div>
+        </div>
         <div className="result-banner">
           <h3>你除了是設計師之外，更是一個......</h3>
         </div>
