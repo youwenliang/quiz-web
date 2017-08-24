@@ -9,7 +9,7 @@ import loadImage from 'image-promise';
 import bodymovin from 'bodymovin';
 
 ReactDOM.render(
- <BrowserRouter basename="quiz-web">
+ <BrowserRouter>
    <App />
  </BrowserRouter>,
  document.getElementById("root")
