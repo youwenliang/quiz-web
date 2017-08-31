@@ -1,5 +1,5 @@
 {
-  "name": "quiz-web",
+  "name": "tone-quiz",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,5 +28,5 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://youwenliang.github.io/quiz-web"
+  "homepage": "https://youwenliang.github.io/tone-quiz"
 }
