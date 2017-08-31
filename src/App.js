@@ -3,90 +3,112 @@ import './App.css';
 import $ from 'jquery';
 import bodymovin from 'bodymovin';
 import {Helmet} from 'react-helmet';
+import { Redirect } from "react-router-dom";
+import loadImage from 'image-promise';
 
 /* --- Global Variable --- */
 var quizTitle = "初始題";
 var quizNum = 1;
 var quizWeight = 1;
 var quizImg = "";
-var results = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
-var gender = (window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
+var results = ""//(window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[0]);
+var gender = ""//(window.location.hash === "") ? "" : decodeURIComponent((window.location.hash).split('#')[1].split('-')[1]);
 
 /* --- Strings --- */
 var strings = {
   "外星人": {
+    "id": "1",
     "title": "夢想這條路踏上了，就算跪著走，吾往矣！",
     "talent": ["好運-mid", "肝指數-full", "M傾向-mid"],
     "skill": ["真・無雙辯士", "目光如鷹", "愚公移山"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的..."
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "控制狂": {
+    "id": "2",
     "title": "交給你了，我有好好記下來了喲（燦笑）",
     "talent": ["耐心度-low", "S傾向-high", "惹人厭指數-mid"],
     "skill": ["皮笑肉不笑", "按表操課", "世紀末魔術師"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "CEO": {
+    "id": "3",
     "title": "我說要有光，就有了光。",
     "talent": ["市場眼光-high", "商業嗅覺-mid", "野心戰鬥值-high"],
     "skill": ["嘴砲/精準射手", "橫向組織管理", "明星光環"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "two"
   },
   "偵探": {
+    "id": "4",
     "title": "真相，永遠只有一個！",
     "talent": ["邏輯力-high", "疑心病-high", "聯想力-mid"],
     "skill": ["換位思考", "讀心術", "海龜湯高手"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "two"
   },
   "科學家": {
+    "id": "5",
     "title": "糖、香料、還有美好的味道… 咦？等等，我的化學物Ｘ呢！",
     "talent": ["邏輯力-high", "宅宅程度-mid", "嚴謹度-high"],
     "skill": ["動手做做看", "異元素組合力", "科學精神"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "大善人": {
+    "id": "6",
     "title": "這世界有太多比錢更重要的事了",
     "talent": ["善良-full", "天真-mid", "小幸運-high"],
     "skill": ["同理他者", "熱心公益", "召喚世界和平"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "哲學家": {
+    "id": "7",
     "title": "少即是多，色即是空。",
     "talent": ["世俗適應力-low", "理解力-high", "靈性-high"],
     "skill": ["設計是信仰", "形而上的深思熟慮", "看書如喝水"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "鍊金術師": {
+    "id": "8",
     "title": "令人感到悔恨的不是做過的事，而是那些從未做過的。",
     "talent": ["做了再說-high", "存款數字-low", "勇於突破-high"],
     "skill": ["黑白穿搭愛好者", "超棒的想像力", "異材質掌握力"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": ""
   },
   "說書人": {
+    "id": "9",
     "title": "我一就天橋底下說書的，講得一口好故事，聽眾一定不會少。",
     "talent": ["文化感知力-high", "狼性-low", "資源回收力-high"],
     "skill": ["時光回朔", "說故事的能力", "隨時準備開咖啡店"],
     "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": "three"
   },
   "雞排店長": {
+    "id": "10",
     "title": "做什麼設計，現在加盟雞排店還來得及唷～",
     "talent": ["炸雞排-high", "賣雞排-high", "吃雞排-high"],
     "skill": ["文創雞排", "鮮美多汁", "攤販設計"],
-    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們<a href='#''>我也覺得</a>", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
-    "more": "臺條行國大第問所葉要生？是裡他結民費東成十們，體海顯白可總二完取生高此落醫再了去技走整指區！"
+    "content": ["臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們", "臺條行國大第問所葉要生？是裡他結民費東成十們"],
+    "more": "擅長....的你，只要在掌握更好的...，就可以...，成為不只是設計師的...",
+    "length": ""
   }
 };
 
-var start = (!strings[results]) ? "main" : "result";
+var start = "main"; //(!strings[results]) ? "main" : "result";
 
 var quizzes = {
   "q0": "你的性別是？",
@@ -187,11 +209,44 @@ class App extends Component {
   handler = (s) => {
     var temp = this;
     document.getElementById('root').classList.add('fade');
-    setTimeout(function(){
-      document.getElementById('root').classList.remove('fade');
-      document.querySelector('body').scrollTop = 0;
-      temp.setState({stage: s});
-    }, 400);
+    window.location.hash = s;
+    if(s === "result") {
+      var resultImages = [];
+      console.log(results);
+      resultImages.push('images/result-images/Results-'+strings[results].id+gender+'.png');
+      for (var z = 1; z <= 3; z++) {
+        resultImages.push('images/result-images/Icons-'+strings[results].id+'-'+z+'.png');
+      }
+      loadImage(resultImages)
+      .then(function (allImgs) {
+        console.log(allImgs.length, 'images loaded!', allImgs);
+        setTimeout(function(){
+          document.getElementById('root').classList.remove('fade');
+          document.querySelector('body').scrollTop = 0;
+          temp.setState({stage: s});
+        }, 400);
+        setTimeout(function(){
+          $('#loading').addClass('fade');
+          setTimeout(function(){
+            $('#scroll-down').removeClass('hide');
+            $('.result').addClass('move');
+          }, 3000);
+        }, 1200);
+      })
+      .catch(function (err) {
+        console.error('One or more images have failed to load :(');
+        console.error(err.errored);
+        console.info('But these loaded fine:');
+        console.info(err.loaded);
+      });
+
+    } else {
+      setTimeout(function(){
+        document.getElementById('root').classList.remove('fade');
+        document.querySelector('body').scrollTop = 0;
+        temp.setState({stage: s});
+      }, 400);
+    }
   }
 
   render() {
@@ -210,6 +265,7 @@ class App extends Component {
           <meta property="og:url" content={window.location.href}/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
+        <Redirect from='*' to='/' />
         {main}
         {quiz}
         {result}
@@ -221,7 +277,7 @@ class App extends Component {
 /* --- Main --- */
 class Main extends Component {
   render() {
-    console.log(this.props.stage);
+    // console.log(this.props.stage);
     return (
       <div className="main">
         <div id="main-header">
@@ -247,12 +303,6 @@ class Quiz extends Component {
     }
   }
 
-  doneQuiz = () => {
-    quizTitle = "";
-    quizNum = "";
-    window.location.hash = '#'+results+'-'+gender;
-  }
-
   nextQuiz = (a, b) => {
     quizNum++;
     document.querySelector('body').scrollTop = 0;
@@ -263,9 +313,9 @@ class Quiz extends Component {
 
     switch(a) {
     case "q0":
-      if(b) gender = "男";
-      else gender = "女";
-      quizImg = "問卷問題icon-1";
+      if(b) gender = "m";
+      else gender = "f";
+      quizImg = "Quiz-icon-1";
       $('.quiz-image').addClass('switch');
       break;
     /*** X ***/
@@ -273,28 +323,28 @@ class Quiz extends Component {
       if(b) {
         next = "q4";
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
-      } else quizImg = "問卷問題icon-2";
+        quizImg = "Quiz-icon-4";
+      } else quizImg = "Quiz-icon-2";
       $('.quiz-image').addClass('switch');
       break;
     case "q2":
       if(!b) {
         next = "q4";
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
-      } else quizImg = "問卷問題icon-3";
+        quizImg = "Quiz-icon-4";
+      } else quizImg = "Quiz-icon-3";
       $('.quiz-image').addClass('switch');
       break;
     case "q3":
       if(b) {
-        this.props.handler("result");
-        quizWeight = 96;
         results = "雞排店長";
-        this.doneQuiz();
+        quizWeight = 96;
         next = "done";
+        quizNum--;
+        this.props.handler("result");
       } else {
         quizTitle = "A";
-        quizImg = "問卷問題icon-4";
+        quizImg = "Quiz-icon-4";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -307,12 +357,12 @@ class Quiz extends Component {
       if(countA >= 2) {
         next = "q25";
         quizTitle = "H";
-        quizImg = "問卷問題icon-11";
+        quizImg = "Quiz-icon-11";
         weight = 0;
         quizWeight = 51;
       } else {
         quizTitle = "B";
-        quizImg = "問卷問題icon-5";
+        quizImg = "Quiz-icon-5";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -325,10 +375,10 @@ class Quiz extends Component {
       if(countB < 2) {
         next = "q13";
         quizTitle = "D";
-        quizImg = "問卷問題icon-7";
+        quizImg = "Quiz-icon-7";
       } else {
         quizTitle = "C";
-        quizImg = "問卷問題icon-6";
+        quizImg = "Quiz-icon-6";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -338,12 +388,12 @@ class Quiz extends Component {
         next = "q26"
         results = "大善人";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
       } else {
         next = "q26"
         results = "科學家";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -356,11 +406,11 @@ class Quiz extends Component {
       if(countD > 2) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "大善人";
       } else {
         quizTitle = "E";
-        quizImg = "問卷問題icon-8";
+        quizImg = "Quiz-icon-8";
         quizWeight = 61;
         weight = 2;
       }
@@ -371,10 +421,10 @@ class Quiz extends Component {
       if(!(currentAnswer["q17"] && currentAnswer["q18"])) {
         next = "q22";
         quizTitle = "G";
-        quizImg = "問卷問題icon-10";
+        quizImg = "Quiz-icon-10";
       } else {
         quizTitle = "F";
-        quizImg = "問卷問題icon-9";
+        quizImg = "Quiz-icon-9";
       }
       $('.quiz-image').addClass('switch');
       break;
@@ -383,12 +433,12 @@ class Quiz extends Component {
       if(currentAnswer["q19"] && currentAnswer["q21"]) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "外星人";
       } else {
         next = "q26"
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "CEO";
       }
       $('.quiz-image').addClass('switch');
@@ -398,12 +448,12 @@ class Quiz extends Component {
       if(currentAnswer["q24"]) {
         next = "q26";
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "偵探";
       } else {
         next = "q26"
         quizTitle = "I";
-        quizImg = "問卷問題icon-12";
+        quizImg = "Quiz-icon-12";
         results = "科學家";
       }
       $('.quiz-image').addClass('switch');
@@ -415,7 +465,7 @@ class Quiz extends Component {
       else if(currentAnswer["q25"] === "c") results = "哲學家";
       next = "q26";
       quizTitle = "I";
-      quizImg = "問卷問題icon-12";
+      quizImg = "Quiz-icon-12";
       $('.quiz-image').addClass('switch');
       break;
     /*** I ***/
@@ -433,9 +483,8 @@ class Quiz extends Component {
         this.props.handler("result");
       }
       $('.quiz-image').addClass('switch');
-      this.doneQuiz();
       next = "done";
-      quizImg = "";
+      quizNum--;
       break;
     default:
       break;
@@ -473,9 +522,6 @@ class Quiz extends Component {
         $('.quiz-image').removeClass('switch');
       }
     }, 400);
-    setTimeout(function(){
-      if(next === "done") $('#loading').addClass('fade');
-    }, 1200);
   }
 
   updateDimensions() {
@@ -495,7 +541,7 @@ class Quiz extends Component {
 
   render() {    
     var divStyle = {
-      backgroundImage: "url(images/quiz-images/"+quizImg+".png"
+      backgroundImage: "url(images/quiz-images/"+quizImg+".png)"
     }
 
     let options = null;
@@ -536,27 +582,45 @@ class Quiz extends Component {
 class Result extends Component {
 
   componentDidMount = () => {
-    console.log("mount-result");
+    // console.log("mount-result");
     setTimeout(function(){
       $('.result-image').addClass('slide-in');
       $('.result-bar').addClass('grow');
     },100);
   };
 
+  scrollto = () => {
+    $('html, body').animate({
+        scrollTop: $(".mail").offset().top - 180
+    }, 400);
+    $('#scroll-down').addClass('hide');
+    $('.result').removeClass('move');
+  }
+
+  close = () => {
+    $('#scroll-down').addClass('hide');
+    $('.result').removeClass('move');
+  }
+
   render() {
-    var divStyleHeader = {backgroundImage: "url(images/result-images/"+results+gender+"-header.svg"};
-    var divStyleIcon1 = {backgroundImage: "url(images/result-images/"+results+"-1.png"};
-    var divStyleIcon2 = {backgroundImage: "url(images/result-images/"+results+"-2.png"};
-    var divStyleIcon3 = {backgroundImage: "url(images/result-images/"+results+"-3.png"};
+    var divStyleHeader = {backgroundImage: "url(images/result-images/Results-"+strings[results].id+gender+".png)"};
+    var divStyleIcon1 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-1.png)"};
+    var divStyleIcon2 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-2.png)"};
+    var divStyleIcon3 = {backgroundImage: "url(images/result-images/Icons-"+strings[results].id+"-3.png)"};
     return (
       <div className="result" id={results}>
+        <div id="scroll-down" className="hide">
+          <div id="close" onClick={this.close}>X</div>
+          <h2>Words</h2>
+          <div className="action-button" onClick={this.scrollto}>開始測驗吧</div>
+        </div>
         <div className="result-banner">
           <h3>你除了是設計師之外，更是一個......</h3>
         </div>
         <section id="result-header">
           <div className="result-image" style={divStyleHeader}></div>
-          <div className="result-content">
-            <h2>{results}</h2>
+          <div className={"result-content " + strings[results].length}>
+            <div id="result-bg"><h2>{results}</h2></div>
             <h3>{strings[results].title}</h3>
             <div className="result-bar-container">
               <h6>{strings[results].talent[0].split('-')[0]}</h6>
@@ -622,6 +686,7 @@ class Mail extends Component {
   }
 
   render() {
+    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/quiz-web/results/"+strings[results].id+"&redirect_uri=https://www.facebook.com/";
     return (
       <div className="mail">
         <div className="container" id="mail-container">
@@ -640,7 +705,7 @@ class Mail extends Component {
         </form>
         <div className="share-action">
           <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
-          <div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div>
+          <a href={url}><div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div></a>
         </div>
       </div>
     );

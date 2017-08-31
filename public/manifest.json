@@ -1,9 +1,9 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Tone Quiz",
+  "name": "Tone Quiz",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "favicon-32.png",
       "sizes": "32x32",
       "type": "image/png"
     }
