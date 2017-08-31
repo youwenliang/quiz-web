@@ -610,9 +610,11 @@ class Result extends Component {
     return (
       <div className="result" id={results}>
         <div id="scroll-down" className="hide">
-          <div id="close" onClick={this.close}>X</div>
-          <h2>Words</h2>
-          <div className="action-button" onClick={this.scrollto}>開始測驗吧</div>
+          <div className="scroll-container">
+            <div id="close" onClick={this.close}></div>
+            <h2>Words</h2>
+            <div className="action-button" onClick={this.scrollto}>開始測驗吧</div>
+          </div>
         </div>
         <div className="result-banner">
           <h3>你除了是設計師之外，更是一個......</h3>
@@ -686,7 +688,7 @@ class Mail extends Component {
   }
 
   render() {
-    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/quiz-web/results/"+strings[results].id+"&redirect_uri=https://www.facebook.com/";
+    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/tone-quiz/results/"+strings[results].id+gender+"&redirect_uri=https://www.facebook.com/";
     return (
       <div className="mail">
         <div className="container" id="mail-container">
@@ -699,7 +701,7 @@ class Mail extends Component {
             <p>設計的過程就是一場溝通，藉由好的溝通讓你實現更多可能。我們準備了一個小指南，讓你在設計的時候，能夠更貼近客戶需求。留下你的mail，立馬收到Tone識給你的第一份見面禮！</p>
           </div>  
         </div>
-        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" target="_blank" noValidate>
+        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" noValidate>
           <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
           <input id="mail-button" type="submit" name="subscribe" value="送出" />
         </form>
