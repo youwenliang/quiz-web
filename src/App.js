@@ -253,7 +253,7 @@ class App extends Component {
     let main = null;
     let quiz = null;
     let result = null;
-    var title = results === "" ? "給設計師的專屬測驗" : "你是一個"+results;
+    var title = results === "" ? "給設計師的專屬測驗" : "你的隱藏身份是："+results;
     if(this.state.stage === "main") main = <Main stage={this.state.stage} handler={this.handler.bind(this)}/>;
     if(this.state.stage === "quiz") quiz = <Quiz stage={this.state.stage} handler={this.handler.bind(this)}/>
     if(this.state.stage === "result") result = <Result stage={this.state.stage} handler={this.handler.bind(this)}/>;
@@ -263,6 +263,9 @@ class App extends Component {
           <meta property="og:title" content={"《不只是設計師》- "+title } />
           <meta name="description" content={results} />
           <meta property="og:url" content={window.location.href}/>
+          <meta property="og:image" content="https://youwenliang.github.io/tone-quiz/images/thumbnail-images/Thumbnail-home.png"/>
+          <meta property="og:image:width" content="1200"/>
+          <meta property="og:image:height" content="630"/>
           <title>{"《不只是設計師》- "+title}</title>
         </Helmet>
         <Redirect from='*' to='/' />
@@ -687,6 +690,15 @@ class Mail extends Component {
     window.location.href = window.location.href.split('#')[0];
   }
 
+  submit() {
+    // var form = document.getElementById('mc-embedded-subscribe-form')
+    // form.action = "//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca";
+    // form.method = "post";
+    // var left = ($(window).width() - 650) /2;
+    // var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=650,height=650,left ='+left+',top = 0');
+    // form.target = 'Popup_Window';
+  }
+
   render() {
     var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/tone-quiz/results/"+strings[results].id+gender+"&redirect_uri=https://www.facebook.com/";
     return (
@@ -701,13 +713,13 @@ class Mail extends Component {
             <p>設計的過程就是一場溝通，藉由好的溝通讓你實現更多可能。我們準備了一個小指南，讓你在設計的時候，能夠更貼近客戶需求。留下你的mail，立馬收到Tone識給你的第一份見面禮！</p>
           </div>  
         </div>
-        <form action="//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" noValidate>
+        <form id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" noValidate>
           <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
-          <input id="mail-button" type="submit" name="subscribe" value="送出" />
+          <input id="mail-button" type="submit" name="subscribe" value="送出" onClick={this.submit}/>
         </form>
         <div className="share-action">
           <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
-          <a href={url}><div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div></a>
+          <a href={url} target="_blank"><div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div></a>
         </div>
       </div>
     );
