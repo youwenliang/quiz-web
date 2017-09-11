@@ -691,12 +691,15 @@ class Mail extends Component {
   }
 
   submit() {
-    // var form = document.getElementById('mc-embedded-subscribe-form')
-    // form.action = "//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca";
-    // form.method = "post";
-    // var left = ($(window).width() - 650) /2;
-    // var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=650,height=650,left ='+left+',top = 0');
-    // form.target = 'Popup_Window';
+    var form = document.getElementById('mc-embedded-subscribe-form')
+    form.action = "//toneskill.us16.list-manage.com/subscribe/post?u=a9dda7764d795331587a40f84&amp;id=0142a7caca";
+    form.method = "post";
+    var left = ($(window).width() - 650) /2;
+    var w = window.open('about:blank','Popup_Window','toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=650,height=650,left ='+left+',top = 0');
+    form.target = 'Popup_Window';
+    form.classList.add('success');
+    $('#form-success').html('謝謝訂閱！');
+    $('#form-success').css('display', 'block');
   }
 
   render() {
@@ -714,9 +717,10 @@ class Mail extends Component {
           </div>  
         </div>
         <form id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" className="validate" noValidate>
-          <input type="email" placeholder="Email" spellCheck="false" autoComplete="false" name="EMAIL" />
+          <input id="email-input" type="email" placeholder="Email" required="required" spellCheck="false" autoComplete="false" name="EMAIL" />
           <input id="mail-button" type="submit" name="subscribe" value="送出" onClick={this.submit}/>
         </form>
+        <h3 id="form-success">謝謝訂閱！</h3>
         <div className="share-action">
           <div className="action-button" id="share-button" onClick={this.back}>再玩一次</div>
           <a href={url} target="_blank"><div className="action-button" id="share-quiz"><i className="fa fa-facebook-official" aria-hidden="true"></i>分享結果</div></a>
