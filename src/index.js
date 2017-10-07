@@ -9,7 +9,7 @@ import loadImage from 'image-promise';
 import bodymovin from 'bodymovin';
 
 ReactDOM.render(
- <BrowserRouter>
+ <BrowserRouter basename="tone-quiz">
    <App />
  </BrowserRouter>,
  document.getElementById("root")
