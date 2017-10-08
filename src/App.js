@@ -263,7 +263,7 @@ class App extends Component {
           <meta property="og:title" content={"《不只是設計師》- "+title } />
           <meta name="description" content={results} />
           <meta property="og:url" content={window.location.href}/>
-          <meta property="og:image" content="https://youwenliang.github.io/tone-quiz/images/thumbnail-images/Thumbnail-home.png"/>
+          <meta property="og:image" content="https://quiz.toneskill.co/images/thumbnail-images/Thumbnail-home.png"/>
           <meta property="og:image:width" content="1200"/>
           <meta property="og:image:height" content="630"/>
           <title>{"《不只是設計師》- "+title}</title>
@@ -664,7 +664,7 @@ class Result extends Component {
         <Mail/>
         <footer>
           <div className="container">
-            <a href="/tone-quiz"><div className="logo">Tone</div></a>
+            <a href="/"><div className="logo">Tone</div></a>
             <p>Copyright © 2017 TONEskill Inc. | All pictures are for editorial use only.</p>
           </div>
         </footer>
@@ -703,7 +703,7 @@ class Mail extends Component {
   }
 
   render() {
-    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://youwenliang.github.io/tone-quiz/results/"+strings[results].id+gender+"&redirect_uri=https://www.facebook.com/";
+    var url = "https://www.facebook.com/dialog/share?app_id=144185409502046&display=popup&href=https://quiz.toneskill.co/results/"+strings[results].id+gender+"&redirect_uri=https://www.facebook.com/";
     return (
       <div className="mail">
         <div className="container" id="mail-container">

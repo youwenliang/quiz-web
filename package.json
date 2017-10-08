@@ -28,5 +28,5 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://youwenliang.github.io/tone-quiz"
+  "homepage": "https://toneskill-tw.github.io/tone-quiz"
 }
